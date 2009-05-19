@@ -1,0 +1,64 @@
+"Yo rabbit, Trixx are for hackers"
+
+The goal of Trixx is to build an administration and monitoring tool for RabbitMQ.
+Trixx is written in Clojure and, therefore, is available for all languages that 
+run on JVM.
+
+Features of Trixx:
+
+* add exchange
+* delete exchange
+* list exchanges
+* add queue
+* delete queue
+* list queues
+* add binding
+* list bindings
+* stop app
+* start app
+* reset
+* add vhost
+* delete vhost
+* list vhosts
+* add user
+* delete user
+* list users
+* list connections
+* set permissions
+* clear permissions
+* list vhost permissions
+* list user permissions
+
+Currently, there is no user interface associated with Trixx, but the eventual 
+goal is to provide a nice web interface (hopefully in the next few weeks).  Also,
+the core code is likely to change drastically in the next few months because of
+heavy development.
+
+At the moment, all the features provided by Trixx are also provided by
+rabbitmqctl command line utility, which ships with RabbitMQ.  So you can
+think of the core of Trixx as an API around rabbitmqctl for JVM languages.
+
+Trixx was started as an experiment to learn more about Clojure and RabbitMQ. 
+During my experiment, many people expressed interest in such a tool. So 
+I am making this freely available in hopes that people will find it useful and 
+possibly contribute to the project.
+
+I also wrote a Scala version of Trixx for the same reason.  However, 
+I will probably only continue the development only with the Clojure version.  
+But if you are interested in building out the Scala version please let me know.
+I'll include the source in a contrib folder for anyone that is interested.
+
+Trixx requires RabbitMQ Java client and RabbitMQ broker from the hg repository, 
+changeset: 329:f4073af3d546 and changeset: 1054:fce2dad390ee respectively.  
+However, some features might work with the released version of the broker.
+For example, the ACL feature is only in trunk version of the broker at this time,
+so attempts to use permissions related functionalities in Trixx will result in error.
+Since Trixx directly communicates with Erlang nodes, it requires JInterface.  Trixx
+is using Erlang 6.5 at the time of this writing.
+
+If you have any questions/problems/suggestions with Trixx I can be contacted 
+in the following ways:
+
+Email: aaron.feng.blog@gmail.com
+Twitter: aaronfeng
+Blog: leftrightfold.com
