@@ -1,0 +1,4 @@
+jruby -I ~/.clojure/ \
+      -I ~/.clojure/jinterface-1.4.2/ \
+      -I ~/.clojure/rabbitmq-client/ \
+      $1 

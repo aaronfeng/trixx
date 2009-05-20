@@ -1,0 +1,11 @@
+jirb -I ~/.clojure/ \
+     -I ~/.clojure/jinterface-1.4.2/ \
+     -I ~/.clojure/rabbitmq-client/ \
+     -r ../trixx.jar \
+     -r clojure-1.0.0.jar \
+     -r clojure-contrib.jar \
+     -r clojure-contrib-slim.jar \
+     -r rabbitmq-client.jar \
+     -r commons-cli-1.1.jar \
+     -r commons-io-1.2.jar \
+     -r OtpErlang.jar
