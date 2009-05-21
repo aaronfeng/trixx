@@ -19,9 +19,14 @@ end
 
 t = *Java::com::leftrightfold::Trixx.new
 exchanges = t.list_exchanges("/")
-e = exchanges[0]
+e = exchanges.first
 puts e.name
 puts e.vhost
 #puts e.type
 puts e.durable
 #puts e.auto-delete
+
+t.add_queue("/", "guest", "guest", "my_queue", true)
+queues = t.list_queues("/")
+q = queues.first
+puts q
