@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="trixx" default="jar" basedir=".">
+
+  <property file="build.properties" />
+  <property name="project.name" value="trixx" />
+  <property name="project.version" value="0.1.0" />
+  <property name="project.url" value="http://github.com/aaronfeng/trixx/tree/master" />
+  <property name="clojure.src.dir" value="${basedir}/src" />
+  <property name="classes.dir" value="${basedir}/classes" />
+  <property name="lib.dir" value="${basedir}/lib" />
+  <property name="target.dir" value="${basedir}/target" />
+  <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
+  <property name="rabbitmq.java.client.dir" value="${basedir}/rabbitmq/rabbitmq-java-client" />
+
+
+<!--
+    java -cp "$CLASSPATH" clojure.main -e "(compile 'com.leftrightfold.Trixx)"
+    jar cf trixx.jar -C classes .
+-->
+  <target name="compile" description="Compile the code">
+    <mkdir dir="${classes.dir}" />
+    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" />
+    <java classname="clojure.main" fork="true">
+      <classpath>
+        <pathelement location="${clojure.src.dir}/" />
+        <pathelement location="${classes.dir}/" />
+        <fileset dir="${lib.dir}" includes="*.jar" />
+        <fileset dir="${rabbitmq.java.client.dir}/lib" includes="*.jar" />
+      </classpath>
+      <arg value="-e" />
+      <arg value="(compile 'com.leftrightfold.Trixx)" />
+    </java>
+  </target>
+
+  <target name="jar" depends="compile" description="Build the JAR">
+    <mkdir dir="${target.dir}" />
+    <jar jarfile="${target.dir}/${jar.file.name}">
+      <fileset dir="${clojure.src.dir}" includes="**/*.clj" />
+      <fileset dir="${classes.dir}"     includes="**/*.class" />
+    </jar>
+  </target>
+
+  <target name="clean" description="Clean the output directory">
+    <delete dir="${classes.dir}" />
+    <delete dir="${target.dir}" />
+    <ant antfile="${rabbitmq.java.client.dir}/build.xml" target="clean" />
+  </target>
+
+  <target name="fetch-deps" description="download binary dependencies (rabbitmq-server and rabbitmq-java-client)">
+    <get src="${some.repo.url}/some-compiled.jar" dest="${basedir}/lib/some-compiled.jar" />
+  </target>
+
+</project>
