@@ -22,10 +22,6 @@
   <property name="com.leftrightfold.trixx.rabbit-server" value="localhost" />
   <property name="com.leftrightfold.trixx.rabbit-instance" value="rabbit" />
 
-  <target name="foo">
-    <echo message="foo: erlang.cookie=${erlang.cookie}" />
-  </target>
-
   <path id="classpath">
     <path location="${build.dir}" />
     <path location="${source.dir}" />
