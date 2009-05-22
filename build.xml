@@ -17,6 +17,15 @@
   <property name="deps.file" value="trixx-deps.zip" />
   <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
 
+  <property name="erlang.cookie.file" value="${user.home}/.erlang.cookie" />
+  <loadfile property="com.leftrightfold.trixx.cookie" srcFile="${erlang.cookie.file}" />
+  <property name="com.leftrightfold.trixx.rabbit-server" value="localhost" />
+  <property name="com.leftrightfold.trixx.rabbit-instance" value="rabbit" />
+
+  <target name="foo">
+    <echo message="foo: erlang.cookie=${erlang.cookie}" />
+  </target>
+
   <path id="classpath">
     <path location="${build.dir}" />
     <path location="${source.dir}" />
@@ -80,8 +89,11 @@
   </target>
 
   <target name="run-trixx" description="Run the compojure server" >
-    <mkdir dir="${build.dir}" />
+    <echo message="Ensure you've run rabbit before this task..." />
     <java classname="clojure.main" fork="true">
+      <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
       <arg value="src/com/leftrightfold/services.clj" />
       <classpath>
           <path refid="classpath" />

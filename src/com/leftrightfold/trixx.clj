@@ -27,9 +27,13 @@
   (:use clojure.contrib.str-utils))
 
 (def *node-name* "trixx")
-(def *cookie* "ENTER-YOUR-RABBIT-ERLANG-COOKIE-HERE")
-(def *server* "ENTER-SERVER-RABBIT-IS-RUNNING-ON")
-(def *rabbit-instance* "rabbit@YOUR-RABIT-SERVER")
+(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "ENTER-YOUR-RABBIT-ERLANG-COOKIE-HERE"))
+(def *server* (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "ENTER-SERVER-RABBIT-IS-RUNNING-ON"))
+(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit@YOUR-RABIT-SERVER"))
+
+(prn (format "%s: *cookie*=%s" *ns* *cookie*))
+(prn (format "%s: *server*=%s" *ns* *server*))
+(prn (format "%s: *rabbit-instance=%s" *ns* *rabbit-instance*))
 
 (defstruct exchange-info :name :vhost :type :durable :auto-delete)
 

@@ -59,9 +59,21 @@ is using Erlang 6.5 at the time of this writing.
 
 Building
 --------------------------------------------------------------------------------
-ant fetch-deps
-ant jar
-ant server
+To build from source:
+
+  ant fetch-deps compile-rabbit-server compile-rabbit-java-client jar
+
+Note that we've included a specific version of RabbitMQ at this time.
+You'll have to have Erlang installed and RabbitMQ it will get built by
+the compile-rabbit-server target.
+
+Then in seperate terminals:
+
+  ant run-rabbit
+  ant run-trixx
+
+Then open a browser to http://localhost:8080/exchanges
+
 
 Contact
 --------------------------------------------------------------------------------
