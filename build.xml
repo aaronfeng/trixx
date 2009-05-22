@@ -99,9 +99,11 @@
   </target>
 
   <target name="run-rabbit" description="Run the RabbitMQ Server">
-    <exec executable="./rabbitmq-server" dir="${rabbitmq.base.dir}/local/sbin" />
+    <echo message="run-rabbit: dir=${rabbitmq.base.dir}/local/sbin executable=./rabbitmq-server" />
+    <exec executable="bash" searchpath="true" dir="${rabbitmq.base.dir}/local/sbin">
+      <arg value="./rabbitmq-server" />
+    </exec>
   </target>
-
 
 
 </project>
