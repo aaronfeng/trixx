@@ -12,7 +12,6 @@
   <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
-  <property name="rabbitmq.java.client.dir" value="${rabbitmq.base.dir}/rabbitmq-java-client" />
   <property name="rabbitmq.server.dir" value="${rabbitmq.base.dir}/rabbitmq-server" />
   <property name="deps.file" value="trixx-deps.zip" />
   <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
@@ -30,16 +29,6 @@
     </fileset>
   </path>
   
-  <target name="compile-rabbit-java-client" description="Compile Rabbit Java Client">
-    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" target="jar" />
-    <copy file="${rabbitmq.java.client.dir}/build/lib/rabbitmq-client.jar" todir="${deps.dir}" />
-    <copy todir="${deps.dir}">
-      <fileset dir="${rabbitmq.java.client.dir}/lib">
-        <include name="*.jar" />
-      </fileset>
-    </copy>
-  </target>
-
   <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
       <arg value="srcdist" />
@@ -56,7 +45,7 @@
 
   <target name="compile" depends="compile-trixx" description="Compile project." />
 
-  <target name="compile-trixx" description="Compile Trixx (clojure.lang.Compile)" depends="compile-rabbit-java-client">
+  <target name="compile-trixx" description="Compile Trixx (clojure.lang.Compile)">
     <mkdir dir="${build.dir}" />
     <java classname="clojure.lang.Compile" fork="true">
       <sysproperty key="clojure.compile.path" value="${build.dir}" />
@@ -76,7 +65,6 @@
   <target name="clean" description="Clean the output directory">
     <delete dir="${build.dir}" />
     <delete dir="${target.dir}" />
-    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" target="clean" />
   </target>
 
   <target name="fetch-deps" description="download dependencies">
@@ -101,6 +89,9 @@
   <target name="run-rabbit" description="Run the RabbitMQ Server">
     <echo message="run-rabbit: dir=${rabbitmq.base.dir}/local/sbin executable=./rabbitmq-server" />
     <exec executable="bash" searchpath="true" dir="${rabbitmq.base.dir}/local/sbin">
+		  <env key="RABBITMQ_MNESIA_DIR" value="${rabbitmq.base.dir}/local/mnesia" />
+      <env key="RABBITMQ_LOG_BASE" value="${rabbitmq.base.dir}/local/log" />
+		  <env key="RABBITMQ_SERVER_START_ARGS" value= "-s rabbit" />
       <arg value="./rabbitmq-server" />
     </exec>
   </target>
