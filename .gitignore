@@ -1,4 +1,4 @@
 classes
-.*
-!.gitignore
-*.jar
+build/
+lib/rabbitmq-client.jar
+rabbitmq/rabbitmq-java-client/build/lib/
