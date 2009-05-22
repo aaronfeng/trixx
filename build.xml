@@ -76,7 +76,7 @@
   <target name="clean" description="Clean the output directory">
     <delete dir="${build.dir}" />
     <delete dir="${target.dir}" />
-    <ant antfile="${rabbitmq.java.client.dir}/build.xml" target="clean" />
+    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" target="clean" />
   </target>
 
   <target name="fetch-deps" description="download dependencies">
