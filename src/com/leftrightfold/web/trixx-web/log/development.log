@@ -1,0 +1,452 @@
+/!\ FAILSAFE /!\  Thu May 21 14:19:23 -0400 2009
+  Status: 500 Internal Server Error
+  no such file to load -- sqlite3
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/monitor.rb:191:in `mon_synchronize'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:123:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:115:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:9:in `cache'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:28:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:48:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb:46:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+/!\ FAILSAFE /!\  Thu May 21 14:19:45 -0400 2009
+  Status: 500 Internal Server Error
+  no such file to load -- sqlite3
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/monitor.rb:191:in `mon_synchronize'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:123:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:115:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:9:in `cache'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:28:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:48:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb:46:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+/!\ FAILSAFE /!\  Thu May 21 14:19:47 -0400 2009
+  Status: 500 Internal Server Error
+  no such file to load -- sqlite3
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/monitor.rb:191:in `mon_synchronize'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:123:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:115:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:9:in `cache'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:28:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:48:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb:46:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+/!\ FAILSAFE /!\  Thu May 21 14:19:49 -0400 2009
+  Status: 500 Internal Server Error
+  no such file to load -- sqlite3
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:156:in `require'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/monitor.rb:191:in `mon_synchronize'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:123:in `retrieve_connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_specification.rb:115:in `connection'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:9:in `cache'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:28:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:48:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb:46:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:20:43) [GET]
+
+NoMethodError (undefined method `call' for HomeController:Class):
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (157.0ms)
+Rendered rescues/_request_and_response (10.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:21:25) [GET]
+Completed in 6ms (View: 2 | 200 OK [http://localhost/home/index]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:23:24) [GET]
+
+SyntaxError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/home_controller.rb:5: , unexpected ':'
+):
+  app/controllers/home_controller.rb:380
+  app/controllers/home_controller.rb:380:in `load'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (222.0ms)
+Rendered rescues/_request_and_response (12.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:25:42) [GET]
+
+SyntaxError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/home_controller.rb:5: , unexpected ':'
+):
+  app/controllers/home_controller.rb:380
+  app/controllers/home_controller.rb:380:in `load'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (176.0ms)
+Rendered rescues/_request_and_response (2.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:25:44) [GET]
+
+SyntaxError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/home_controller.rb:5: , unexpected ':'
+):
+  app/controllers/home_controller.rb:380
+  app/controllers/home_controller.rb:380:in `load'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (173.0ms)
+Rendered rescues/_request_and_response (1.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:25:54) [GET]
+
+SyntaxError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/home_controller.rb:5: , unexpected ':'
+):
+  app/controllers/home_controller.rb:380
+  app/controllers/home_controller.rb:380:in `load'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (174.0ms)
+Rendered rescues/_request_and_response (10.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 14:25:56) [GET]
+
+SyntaxError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/home_controller.rb:5: , unexpected ':'
+):
+  app/controllers/home_controller.rb:380
+  app/controllers/home_controller.rb:380:in `load'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (167.0ms)
+Rendered rescues/_request_and_response (1.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:27:05) [GET]
+Completed in 11ms (View: 2 | 200 OK [http://localhost/home/index]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:30:19) [GET]
+
+NoMethodError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.pop):
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/json-jruby-1.1.6-universal-java-1.6/lib/json/common.rb:183:in `generate'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/json-jruby-1.1.6-universal-java-1.6/lib/json/common.rb:341:in `JSON'
+  app/controllers/home_controller.rb:6:in `index'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (170.0ms)
+Rendered rescues/_request_and_response (1.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:50:41) [GET]
+
+NoMethodError (undefined method `strin' for #<String:0x17a7905e>):
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (158.0ms)
+Rendered rescues/_request_and_response (2.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:51:06) [GET]
+Rendering home/index
+ERROR: compiling _run_erb_app47views47home47index46html46erb RAISED /home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/views/home/index.html.erb:7: unknown regexp option - l
+Function body:           def _run_erb_app47views47home47index46html46erb(local_assigns)
+            old_output_buffer = output_buffer;;@output_buffer = '';  __in_erb_template=true ; @output_buffer.concat "<html>\n"
+@output_buffer.concat "<body>\n"
+@output_buffer.concat "<ul>\n"
+ @exchanges.each do |exchange|; @output_buffer.concat "\n"
+@output_buffer.concat "        <li>"; @output_buffer.concat((exchange["name"]</li>
+<%- end ).to_s); @output_buffer.concat "\n"
+@output_buffer.concat "</ul>\n"
+@output_buffer.concat "</body>\n"
+@output_buffer.concat "</html>\n"
+@output_buffer.concat "\n"
+@output_buffer
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+Backtrace: /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:77:in `module_eval'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:77:in `compile!'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:61:in `compile'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:28:in `render'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/template.rb:194:in `render_template'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_view/base.rb:260:in `render'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1241:in `render_for_file'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:937:in `render'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:51:in `render_with_benchmark'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:51:in `render_with_benchmark'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1317:in `default_render'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1323:in `perform_action'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:617:in `call_filters'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:610:in `perform_action_with_filters'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:68:in `perform_action_with_benchmark'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:68:in `perform_action_with_benchmark'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rescue.rb:160:in `perform_action_with_rescue'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/flash.rb:141:in `perform_action_with_flash'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:523:in `process'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:606:in `process_with_filters'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:391:in `process'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:386:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:433:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:88:in `dispatch'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:111:in `_call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:82:in `initialize'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:48:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/gems/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb:46:in `service'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+/home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+ActionView::TemplateError (/home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/views/home/index.html.erb:7: unknown regexp option - l) on line #7 of app/views/home/index.html.erb:
+4: <%- @exchanges.each do |exchange|%>
+5:         <li><%=exchange["name"]</li>
+6: <%- end %>
+7: </ul>
+8: </body>
+9: </html>
+
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (205.0ms)
+Rendered rescues/_request_and_response (1.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:51:55) [GET]
+Rendering home/index
+Completed in 66ms (View: 6 | 200 OK [http://localhost/home/index]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-21 14:52:22) [GET]
+Rendering home/index
+Completed in 43ms (View: 6 | 200 OK [http://localhost/home/index]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-21 15:31:02) [GET]
+
+LoadError (Expected /home/afeng/development/algo-direct/lib/trixx/src/com/leftrightfold/web/trixx-web/app/controllers/exchanges_controller.rb to define ExchangesController):
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (147.0ms)
+Rendered rescues/_request_and_response (11.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExchangesController#index (for 127.0.0.1 at 2009-05-21 15:31:20) [GET]
+
+NoMethodError (undefined method `all' for Exchange:Class):
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /home/afeng/development/jruby/jruby-1.3.0RC1/lib/ruby/1.8/webrick/server.rb:162:in `start'
+
+Rendered rescues/_trace (163.0ms)
+Rendered rescues/_request_and_response (1.0ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExchangesController#index (for 127.0.0.1 at 2009-05-21 15:31:37) [GET]
+Rendering exchanges/index
+Completed in 113ms (View: 29 | 200 OK [http://localhost/exchanges/]
+
+
+Processing ExchangesController#index (for 127.0.0.1 at 2009-05-21 15:35:12) [GET]
+Rendering exchanges/index
+Completed in 49ms (View: 10 | 200 OK [http://localhost/exchanges/]

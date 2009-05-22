@@ -132,7 +132,7 @@
   (let [queues (as-seq (execute *node-name*
 		                "rabbit_amqqueue"
 		                "info_all"
-		                (create-args "/")
+		                (create-args vhost)
 		                *rabbit-instance*
 		                *cookie*))]
   (map (fn [q] 
