@@ -8,10 +8,12 @@
   <property name="project.url" value="http://github.com/aaronfeng/trixx/tree/master" />
   <property name="source.dir" value="${basedir}/src" />
   <property name="build.dir" value="${basedir}/classes" />
-  <property name="deps.dir" value="${basedir}/lib" />
+  <property name="deps.dir" value="${basedir}/deps" />
   <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.java.client.dir" value="${basedir}/rabbitmq/rabbitmq-java-client" />
+  <property name="deps.file" value="trixx-deps.zip" />
+  <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
 
   <path id="classpath">
     <path location="${build.dir}"/>
@@ -56,10 +58,20 @@
     <ant antfile="${rabbitmq.java.client.dir}/build.xml" target="clean" />
   </target>
 
-<!--
-  <target name="fetch-deps" description="download binary dependencies (rabbitmq-server and rabbitmq-java-client)">
-    <get src="${some.repo.url}/some-compiled.jar" dest="${basedir}/lib/some-compiled.jar" />
+  <target name="fetch-deps" description="download dependencies">
+    <get usetimestamp="true" description="Trixx dependencies." src="${deps.url}" dest="${deps.file}"/>
+    <unzip src="${deps.file}" dest="."/>
   </target>
--->
+
+  <target name="server" description="Run the compojure server" >
+    <mkdir dir="${build.dir}" />
+    <java classname="clojure.main" fork="true">
+      <sysproperty key="clojure.compile.path" value="${build.dir}" />
+      <classpath refid="classpath" />
+      <arg value="src/com/leftrightfold/services.clj" />
+    </java>
+  </target>
+
+
 
 </project>
