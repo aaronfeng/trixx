@@ -24,46 +24,25 @@
        (get-queues "/"))
   (GET "/queues/*"
        (get-queues (str "/" (params :*))))
-	(GET "/bindings"
-	     (get-bindings "/"))
-	(GET "/bindings/*"
-	     (get-bindings (str "/" (params :*))))
+  (GET "/bindings"
+       (get-bindings "/"))
+  (GET "/bindings/*"
+       (get-bindings (str "/" (params :*))))
 
-  (GET "/stop-app"
-	     (stop-app))
-	(GET "/stop-app/"
-	     (stop-app))
-	(GET "/start-app"
-	     (start-app))
-	(GET "/start-app/"
-	     (start-app))
-	(GET "/reset"
-	     (reset))
-	(GET "/reset/"
-	     (reset))
-	(GET "/add-vhost/:vhost"
-	     (add-vhost (params :vhost)))
-	(GET "/delete-vhost/:vhost"
-	     (delete-vhost (params :vhost)))
+  (PUT "/rabbit/stop"
+       (stop-app))
+  (PUT "/rabbit/stop/"
+       (stop-app))
 
-	(GET "/list-vhosts"
-	     (list-vhosts))
-	(GET "/list-vhosts/"
-	     (list-vhosts))
-
-	(GET "/add-user/:name/:password"
-	     (add-user (params :name) (params :password)))
-	(GET "/delete-user/:name"
-	     (delete-user (params :name)))
-	(GET "/list-users"
-	     (list-users))
-	(GET "/list-users/"
-	     (list-users))
-	(GET "/list-connections"
-	     (list-connections))
-	(GET "/list-connections/"
-	     (list-connections))
-	)
+  (PUT "/rabbit/start"
+       (start-app))
+  (PUT "/rabbit/start/"
+       (start-app))
+  (PUT "/rabbit/reset"
+       (reset))
+  (PUT "/rabbit/reset/"
+       (reset))
+)
   
 (run-server {:port 8080}
-  "/*" (servlet exchanges))
+"/*" (servlet exchanges))
