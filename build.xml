@@ -9,7 +9,7 @@
   <property name="source.dir" value="${basedir}/src" />
   <property name="build.dir" value="${basedir}/classes" />
   <property name="deps.dir" value="${basedir}/lib" />
-  <property name="target.dir" value="${basedir}/target" />
+  <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.java.client.dir" value="${basedir}/rabbitmq/rabbitmq-java-client" />
 
@@ -43,6 +43,7 @@
   </target>
 
   <target name="jar" depends="compile" description="Assemble the JAR">
+    <mkdir dir="${target.dir}" />
     <jar jarfile="${target.dir}/${jar.file.name}">
       <fileset dir="${source.dir}" includes="**/*.clj" />
       <fileset dir="${build.dir}"  includes="**/*.class" />
