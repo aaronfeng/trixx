@@ -6,49 +6,59 @@
   <property name="project.name" value="trixx" />
   <property name="project.version" value="0.1.0" />
   <property name="project.url" value="http://github.com/aaronfeng/trixx/tree/master" />
-  <property name="clojure.src.dir" value="${basedir}/src" />
-  <property name="classes.dir" value="${basedir}/classes" />
-  <property name="lib.dir" value="${basedir}/lib" />
+  <property name="source.dir" value="${basedir}/src" />
+  <property name="build.dir" value="${basedir}/classes" />
+  <property name="deps.dir" value="${basedir}/lib" />
   <property name="target.dir" value="${basedir}/target" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.java.client.dir" value="${basedir}/rabbitmq/rabbitmq-java-client" />
 
+  <path id="classpath">
+    <path location="${build.dir}"/>
+    <path location="${source.dir}"/>
+    <fileset dir="${deps.dir}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+  
+  <target name="compile-rabbit-java-client" description="Compile Rabbit Java Client">
+    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" target="jar" />
+    <copy file="${rabbitmq.java.client.dir}/build/lib/rabbitmq-client.jar" todir="${deps.dir}" />
+    <copy todir="${deps.dir}">
+      <fileset dir="${rabbitmq.java.client.dir}/lib">
+        <include name="*.jar" />
+      </fileset>
+    </copy>
+  </target>
 
-<!--
-    java -cp "$CLASSPATH" clojure.main -e "(compile 'com.leftrightfold.Trixx)"
-    jar cf trixx.jar -C classes .
--->
-  <target name="compile" description="Compile the code">
-    <mkdir dir="${classes.dir}" />
-    <ant antfile="${rabbitmq.java.client.dir}/build.xml" dir="${rabbitmq.java.client.dir}" />
-    <java classname="clojure.main" fork="true">
-      <classpath>
-        <pathelement location="${clojure.src.dir}/" />
-        <pathelement location="${classes.dir}/" />
-        <fileset dir="${lib.dir}" includes="*.jar" />
-        <fileset dir="${rabbitmq.java.client.dir}/lib" includes="*.jar" />
-      </classpath>
-      <arg value="-e" />
-      <arg value="(compile 'com.leftrightfold.Trixx)" />
+  <target name="compile" depends="compile-trixx" description="Compile project."/>
+
+  <target name="compile-trixx" description="Compile Trixx (clojure.lang.Compile)" depends="compile-rabbit-java-client">
+    <mkdir dir="${build.dir}" />
+    <java classname="clojure.lang.Compile" fork="true">
+      <sysproperty key="clojure.compile.path" value="${build.dir}" />
+      <classpath refid="classpath" />
+      <arg value="com.leftrightfold.trixx" />
     </java>
   </target>
 
-  <target name="jar" depends="compile" description="Build the JAR">
-    <mkdir dir="${target.dir}" />
+  <target name="jar" depends="compile" description="Assemble the JAR">
     <jar jarfile="${target.dir}/${jar.file.name}">
-      <fileset dir="${clojure.src.dir}" includes="**/*.clj" />
-      <fileset dir="${classes.dir}"     includes="**/*.class" />
+      <fileset dir="${source.dir}" includes="**/*.clj" />
+      <fileset dir="${build.dir}"  includes="**/*.class" />
     </jar>
   </target>
 
   <target name="clean" description="Clean the output directory">
-    <delete dir="${classes.dir}" />
+    <delete dir="${build.dir}" />
     <delete dir="${target.dir}" />
     <ant antfile="${rabbitmq.java.client.dir}/build.xml" target="clean" />
   </target>
 
+<!--
   <target name="fetch-deps" description="download binary dependencies (rabbitmq-server and rabbitmq-java-client)">
     <get src="${some.repo.url}/some-compiled.jar" dest="${basedir}/lib/some-compiled.jar" />
   </target>
+-->
 
 </project>
