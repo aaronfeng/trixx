@@ -450,3 +450,50 @@ Completed in 113ms (View: 29 | 200 OK [http://localhost/exchanges/]
 Processing ExchangesController#index (for 127.0.0.1 at 2009-05-21 15:35:12) [GET]
 Rendering exchanges/index
 Completed in 49ms (View: 10 | 200 OK [http://localhost/exchanges/]
+
+
+Processing ExchangesController#index (for 127.0.0.1 at 2009-05-22 14:55:27) [GET]
+
+Errno::ECONNREFUSED (Connection refused - connect(2)):
+  /usr/lib/ruby/1.8/net/http.rb:560:in `initialize'
+  /usr/lib/ruby/1.8/net/http.rb:560:in `open'
+  /usr/lib/ruby/1.8/net/http.rb:560:in `connect'
+  /usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+  /usr/lib/ruby/1.8/timeout.rb:93:in `timeout'
+  /usr/lib/ruby/1.8/net/http.rb:560:in `connect'
+  /usr/lib/ruby/1.8/net/http.rb:553:in `do_start'
+  /usr/lib/ruby/1.8/net/http.rb:542:in `start'
+  /usr/lib/ruby/1.8/open-uri.rb:242:in `open_http'
+  /usr/lib/ruby/1.8/open-uri.rb:616:in `buffer_open'
+  /usr/lib/ruby/1.8/open-uri.rb:164:in `open_loop'
+  /usr/lib/ruby/1.8/open-uri.rb:162:in `catch'
+  /usr/lib/ruby/1.8/open-uri.rb:162:in `open_loop'
+  /usr/lib/ruby/1.8/open-uri.rb:132:in `open_uri'
+  /usr/lib/ruby/1.8/open-uri.rb:518:in `open'
+  /usr/lib/ruby/1.8/open-uri.rb:30:in `open'
+  app/models/exchange.rb:16:in `all'
+  app/controllers/exchanges_controller.rb:5:in `index'
+  /usr/lib/ruby/1.8/mongrel.rb:159:in `process_client'
+  /usr/lib/ruby/1.8/mongrel.rb:158:in `each'
+  /usr/lib/ruby/1.8/mongrel.rb:158:in `process_client'
+  /usr/lib/ruby/1.8/mongrel.rb:285:in `run'
+  /usr/lib/ruby/1.8/mongrel.rb:285:in `initialize'
+  /usr/lib/ruby/1.8/mongrel.rb:285:in `new'
+  /usr/lib/ruby/1.8/mongrel.rb:285:in `run'
+  /usr/lib/ruby/1.8/mongrel.rb:268:in `initialize'
+  /usr/lib/ruby/1.8/mongrel.rb:268:in `new'
+  /usr/lib/ruby/1.8/mongrel.rb:268:in `run'
+
+Rendered rescues/_trace (26.4ms)
+Rendered rescues/_request_and_response (0.9ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExchangesController#index (for 127.0.0.1 at 2009-05-22 14:57:30) [GET]
+Rendering exchanges/index
+Completed in 207ms (View: 4 | 200 OK [http://localhost/exchanges/]
+
+
+Processing HomeController#index (for 127.0.0.1 at 2009-05-22 14:58:57) [GET]
+Rendering home/index
+Completed in 155ms (View: 4 | 200 OK [http://localhost/]
