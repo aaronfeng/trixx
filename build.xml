@@ -89,12 +89,17 @@
   <target name="run-rabbit" description="Run the RabbitMQ Server">
     <echo message="run-rabbit: dir=${rabbitmq.base.dir}/local/sbin executable=./rabbitmq-server" />
     <exec executable="bash" searchpath="true" dir="${rabbitmq.base.dir}/local/sbin">
-		  <env key="RABBITMQ_MNESIA_DIR" value="${rabbitmq.base.dir}/local/mnesia" />
+      <env key="RABBITMQ_MNESIA_DIR" value="${rabbitmq.base.dir}/local/mnesia" />
       <env key="RABBITMQ_LOG_BASE" value="${rabbitmq.base.dir}/local/log" />
-		  <env key="RABBITMQ_SERVER_START_ARGS" value= "-s rabbit" />
+      <env key="RABBITMQ_SERVER_START_ARGS" value= "-s rabbit" />
       <arg value="./rabbitmq-server" />
     </exec>
   </target>
 
+  <target name="run-www" description="Run the Ruby Console Web App">
+    <exec executable="ruby" searchpath="true" dir="${basedir}">
+      <arg value="src/com/leftrightfold/web/trixx-web/script/server" />
+    </exec>
+  </target>
 
 </project>
