@@ -14,5 +14,5 @@ for f in $HOME/.clojure/*; do
    fi
 done
 
-java -cp $CLASSPATH clojure.main -e "(compile 'com.leftrightfold.Trixx)"
+java -cp $CLASSPATH clojure.main -e "(compile 'com.leftrightfold.trixx)"
 jar cf trixx.jar -C classes .
