@@ -63,16 +63,26 @@ To build from source:
 
   ant fetch-deps compile-rabbit-server compile-rabbit-java-client jar
 
-Note that we've included a specific version of RabbitMQ at this time.
-You'll have to have Erlang installed and RabbitMQ it will get built by
+Note that we've included a specific version of RabbitMQ at this time.  You'll
+have to have Erlang installed so it can be built.   RabbitMQ will get built by
 the compile-rabbit-server target.
 
-Then in seperate terminals:
+Then in seperate terminals, first run the rabbit server:
 
   ant run-rabbit
+
+Then the trixx server:
+
   ant run-trixx
 
-Then open a browser to http://localhost:8080/exchanges
+Open your browser to any of:
+
+   http://localhost:8080/exchanges
+   http://localhost:8080/queues
+   http://localhost:8080/list-users
+   http://localhost:8080/list-vhosts
+   http://localhost:8080/list-connections
+   http://localhost:8080/bindings
 
 
 Contact
