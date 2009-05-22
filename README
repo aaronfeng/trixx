@@ -56,6 +56,15 @@ so attempts to use permissions related functionalities in Trixx will result in e
 Since Trixx directly communicates with Erlang nodes, it requires JInterface.  Trixx
 is using Erlang 6.5 at the time of this writing.
 
+
+Building
+--------------------------------------------------------------------------------
+ant fetch-deps
+ant jar
+ant server
+
+Contact
+--------------------------------------------------------------------------------
 If you have any questions/problems/suggestions with Trixx I can be contacted 
 in the following ways:
 

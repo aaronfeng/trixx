@@ -1,5 +1,12 @@
+*~
 classes
 build/
 lib/rabbitmq-client.jar
 rabbitmq/rabbitmq-java-client/build/lib/
 deps/
+trixx-deps.zip
+rabbitmq/local
+rabbitmq/rabbitmq-server/INSTALL
+rabbitmq/rabbitmq-server/dist/
+rabbitmq/rabbitmq-server/docs/*.gz
+rabbitmq/rabbitmq-server/ebin/*.beam

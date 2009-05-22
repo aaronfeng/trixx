@@ -11,15 +11,17 @@
   <property name="deps.dir" value="${basedir}/deps" />
   <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
-  <property name="rabbitmq.java.client.dir" value="${basedir}/rabbitmq/rabbitmq-java-client" />
+  <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
+  <property name="rabbitmq.java.client.dir" value="${rabbitmq.base.dir}/rabbitmq-java-client" />
+  <property name="rabbitmq.server.dir" value="${rabbitmq.base.dir}/rabbitmq-server" />
   <property name="deps.file" value="trixx-deps.zip" />
   <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
 
   <path id="classpath">
-    <path location="${build.dir}"/>
-    <path location="${source.dir}"/>
+    <path location="${build.dir}" />
+    <path location="${source.dir}" />
     <fileset dir="${deps.dir}">
-      <include name="*.jar"/>
+      <include name="*.jar" />
     </fileset>
   </path>
   
@@ -33,7 +35,21 @@
     </copy>
   </target>
 
-  <target name="compile" depends="compile-trixx" description="Compile project."/>
+  <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
+    <exec executable="make" dir="${rabbitmq.server.dir}">
+      <arg value="srcdist" />
+      <arg value="all" />
+    </exec>
+    <copy file="${rabbitmq.server.dir}/INSTALL.in" tofile="${rabbitmq.server.dir}/INSTALL" />
+    <exec executable="make" dir="${rabbitmq.server.dir}">
+      <arg value="TARGET_DIR=../local/" />
+      <arg value="SBIN_DIR=../local/sbin" />
+      <arg value="MAN_DIR=../local/man" />
+      <arg value="install" />
+    </exec>
+  </target>
+
+  <target name="compile" depends="compile-trixx" description="Compile project." />
 
   <target name="compile-trixx" description="Compile Trixx (clojure.lang.Compile)" depends="compile-rabbit-java-client">
     <mkdir dir="${build.dir}" />
@@ -59,17 +75,23 @@
   </target>
 
   <target name="fetch-deps" description="download dependencies">
-    <get usetimestamp="true" description="Trixx dependencies." src="${deps.url}" dest="${deps.file}"/>
-    <unzip src="${deps.file}" dest="."/>
+    <get usetimestamp="true" description="Trixx dependencies." src="${deps.url}" dest="${deps.file}" />
+    <unzip src="${deps.file}" dest="." />
   </target>
 
-  <target name="server" description="Run the compojure server" >
+  <target name="run-trixx" description="Run the compojure server" >
     <mkdir dir="${build.dir}" />
     <java classname="clojure.main" fork="true">
-      <sysproperty key="clojure.compile.path" value="${build.dir}" />
-      <classpath refid="classpath" />
       <arg value="src/com/leftrightfold/services.clj" />
+      <classpath>
+          <path refid="classpath" />
+          <path location="${target.dir}/${jar.file.name}" />
+      </classpath>
     </java>
+  </target>
+
+  <target name="run-rabbit" description="Run the RabbitMQ Server">
+    <exec executable="./rabbitmq-server" dir="${rabbitmq.base.dir}/local/sbin" />
   </target>
 
 
