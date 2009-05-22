@@ -61,7 +61,7 @@ Building
 --------------------------------------------------------------------------------
 To build from source:
 
-  ant fetch-deps compile-rabbit-server compile-rabbit-java-client jar
+  ant fetch-deps compile-rabbit-server jar
 
 Note that we've included a specific version of RabbitMQ at this time.  You'll
 have to have Erlang installed so it can be built.   RabbitMQ will get built by
