@@ -84,6 +84,22 @@ Open your browser to any of:
    http://localhost:8080/list-connections
    http://localhost:8080/bindings
 
+The trixx server is a web-services interface to the administrative features
+provided by the trixx library.  To run the Ruby Web Management Console, use
+
+  ant run-www
+
+This runs on http://localhost:3000/
+
+
+Dependencies
+--------------------------------------------------------------------------------
+
+We are making an effort to ensure that Trixx and its dependencies are java 1.5
+compatible.  If you are working on Trixx and would like to submit changes back
+to the core repository, please ensure that your code is 1.5 compaible.
+
+
 
 Contact
 --------------------------------------------------------------------------------
