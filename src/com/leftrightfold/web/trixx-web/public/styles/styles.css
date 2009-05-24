@@ -1,0 +1,25 @@
+body {
+	margin:10px;
+	padding:10px;
+	font-family: Helvetica, "Helvetica Neue", sans-serif;
+	font-size:100%;
+	color:#000;
+	min-width:947px;
+	text-align: center;
+	background-color:#fff;
+}
+
+/* Fix table problems */
+table {
+	font-size:100%;
+	border-collapse: collapse;
+}
+table td,
+table tr {
+	vertical-align: top;
+	padding: 3px;
+}
+table th {
+	text-align: left;
+	padding: 3px;
+}

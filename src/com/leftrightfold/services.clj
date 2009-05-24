@@ -14,34 +14,44 @@
 
 (defn get-bindings [vhost]
   (json-str (list-bindings vhost)))
-
+	
 (defroutes exchanges
   (GET "/exchanges"
        (get-exchanges "/"))
   (GET "/exchanges/*"
        (get-exchanges (str "/" (params :*))))
+
   (GET "/queues"
        (get-queues "/"))
   (GET "/queues/*"
        (get-queues (str "/" (params :*))))
+
   (GET "/bindings"
        (get-bindings "/"))
   (GET "/bindings/*"
        (get-bindings (str "/" (params :*))))
 
-  (PUT "/rabbit/stop"
-       (stop-app))
-  (PUT "/rabbit/stop/"
-       (stop-app))
 
+  (GET "/users"
+       (json-str list-users))
+  (GET "/users/:user/permissions"
+     	 (json-str (list-user-permissions :user)))
+
+	(PUT "/rabbit/stop"
+    	(if stop-app 200 500))
+  (PUT "/rabbit/stop/"
+			(if stop-app 200 500))
   (PUT "/rabbit/start"
-       (start-app))
+			(if start-app 200 500))
   (PUT "/rabbit/start/"
-       (start-app))
+	 		(if stop-app 200 500))
   (PUT "/rabbit/reset"
        (reset))
   (PUT "/rabbit/reset/"
        (reset))
+
+	(ANY "*" 
+	      [404 "Page not found"])
 )
   
 (run-server {:port 8080}

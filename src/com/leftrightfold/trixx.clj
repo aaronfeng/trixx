@@ -33,7 +33,7 @@
 
 (prn (format "%s: *cookie*=%s" *ns* *cookie*))
 (prn (format "%s: *server*=%s" *ns* *server*))
-(prn (format "%s: *rabbit-instance=%s" *ns* *rabbit-instance*))
+(prn (format "%s: *rabbit-instance*=%s" *ns* *rabbit-instance*))
 
 (defstruct exchange-info :name :vhost :type :durable :auto-delete)
 

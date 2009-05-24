@@ -67,7 +67,7 @@ Note that we've included a specific version of RabbitMQ at this time.  You'll
 have to have Erlang installed so it can be built.   RabbitMQ will get built by
 the compile-rabbit-server target.
 
-Then in seperate terminals, first run the rabbit server:
+Then in separate terminals, first run the rabbit server:
 
   ant run-rabbit
 
@@ -97,7 +97,7 @@ Dependencies
 
 We are making an effort to ensure that Trixx and its dependencies are java 1.5
 compatible.  If you are working on Trixx and would like to submit changes back
-to the core repository, please ensure that your code is 1.5 compaible.
+to the core repository, please ensure that your code is 1.5 compatible.
 
 
 
