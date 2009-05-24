@@ -1,5 +1,4 @@
 (ns com.leftrightfold.services
-  (:require (com.leftrightfold.trixx))
   (:use com.leftrightfold.trixx)
   (:use clojure.contrib.json.write)
   (:use compojure)
@@ -32,9 +31,15 @@
        (get-bindings (str "/" (params :*))))
 
   (GET "/users"
-       (json-str list-users))
+    (json-str (list-users)))
+  (GET "/users/"
+    (json-str (list-users)))
+
+  ;;; needs to handle when user can't be found in trixx
   (GET "/users/:user/permissions"
-       (json-str (list-user-permissions :user)))
+    (json-str (list-user-permissions (params :user))))
+  (GET "/users/:user/permissions/"
+    (json-str (list-user-permissions (params :user))))
 
   (PUT "/rabbit/stop"
        (if stop-app 200 500))
