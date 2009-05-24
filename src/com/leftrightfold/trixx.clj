@@ -27,9 +27,9 @@
   (:use clojure.contrib.str-utils))
 
 (def *node-name* "trixx")
-(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "ENTER-YOUR-RABBIT-ERLANG-COOKIE-HERE"))
-(def *server* (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "ENTER-SERVER-RABBIT-IS-RUNNING-ON"))
-(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit@YOUR-RABIT-SERVER"))
+(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "DEFAULT-ERLANG-COOKIE"))
+(def *server* (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "localhost"))
+(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit@localhost"))
 
 (prn (format "%s: *cookie*=%s" *ns* *cookie*))
 (prn (format "%s: *server*=%s" *ns* *server*))
@@ -47,7 +47,7 @@
                            :recv-oct :recv-cnt :send-oct :send-cnt :send-pend
                            :state :channels :user :vhost :timeout :frame-max)
 
-(defstruct user-permissions :name :host :config :write :read)
+(defstruct user :name :host :config :write :read)
 
 ;;; erlang helper
 (defmulti value class)
@@ -198,14 +198,42 @@
 	                        (empty-args) *rabbit-instance* *cookie*))]
     (map (fn [h] (value h)) result)))
 
+(defn execute-list-permissions [target command]
+  "Taget is either user name or host name"
+  (execute *node-name* "rabbit_access_control" command
+	   (create-args target)
+	   *rabbit-instance* *cookie*))
+
+(defn list-vhost-permissions [vhost]
+  (map (fn [x] 
+	 (struct user 
+		 (value (_1st x))
+		 vhost
+		 (value (_2nd x))
+		 (value (_3rd x))
+		 (value (_4th x))))
+       (as-seq (execute-list-permissions vhost "list_vhost_permissions"))))
+
+(defn list-user-permissions [u]
+  (map (fn [x] 
+	 (struct user
+		 u
+		 (value (_1st x))
+		 (value (_2nd x))
+		 (value (_3rd x))
+		 (value (_4th x))))
+       (as-seq (execute-list-permissions u "list_user_permissions"))))
+
 (defn list-users []
-  (map (fn [x] (value x)) 
-       (as-seq (execute *node-name*
-		"rabbit_access_control"
-		"list_users"
-		(empty-args)
-		*rabbit-instance*
-		*cookie*))))
+  (let [users (map (fn [x] (value x)) 
+                   (as-seq (execute *node-name*
+                                    "rabbit_access_control"
+                                    "list_users"
+                                    (empty-args)
+                                    *rabbit-instance*
+                                    *cookie*)))]
+    (map (fn [u] (list-user-permissions u))
+         users)))
 
 (defn add-user [name password]
   (is-successful? #(execute *node-name*
@@ -269,32 +297,6 @@
   (is-successful? #(execute *node-name* "rabbit_access_control" "set_permissions" 
 	                  (create-args user vhost "^$" "^$" "^$")
 	                  *rabbit-instance* *cookie*)))
-
-(defn execute-list-permissions [target command]
-  "Taget is either user name or host name"
-  (execute *node-name* "rabbit_access_control" command
-	   (create-args target)
-	   *rabbit-instance* *cookie*))
-
-(defn list-vhost-permissions [vhost]
-  (map (fn [x] 
-	 (struct user-permissions 
-		 (value (_1st x))
-		 vhost
-		 (value (_2nd x))
-		 (value (_3rd x))
-		 (value (_4th x))))
-       (as-seq (execute-list-permissions vhost "list_vhost_permissions"))))
-
-(defn list-user-permissions [user]
-  (map (fn [x] 
-	 (struct user-permissions
-		 user
-		 (value (_1st x))
-		 (value (_2nd x))
-		 (value (_3rd x))
-		 (value (_4th x))))
-       (as-seq (execute-list-permissions user "list_user_permissions"))))
 
 ;;; via protocol
 (defn add-queue [vhost user password queue-name durable]

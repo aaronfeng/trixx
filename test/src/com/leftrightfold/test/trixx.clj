@@ -17,14 +17,17 @@
 ;;
 ;;  Contributor(s): ______________________________________.
 
-(defn test-add-delete-and-list-queues []
+(ns com.leftrightfold.trixx.test
+  (:use com.leftrightfold.trixx))
+
+(defn add-delete-and-list-queues []
   (assert (zero? (count (list-queues "/"))))
   (add-queue "/" "guest" "guest" "my-queue" true)
   (assert (= 1 (count (list-queues "/"))))
   (delete-queue  "/" "guest" "guest" "my-queue")
   (assert (zero? (count (list-queues "/")))))
 
-(defn test-add-delete-and-list-exchanges []
+(defn add-delete-and-list-exchanges []
   ; 7 default exchanges ships with rabbit by default
   (assert (= 7 (count (list-exchanges "/"))))
   (add-exchange "/" "guest" "guest" "my-exchange" "direct" true)
@@ -32,7 +35,7 @@
   (delete-exchange  "/" "guest" "guest" "my-exchange")
   (assert (= 7 (count (list-exchanges "/")))))
 
-(defn test-add-delete-and-list-bindings []
+(defn add-delete-and-list-bindings []
   (assert (zero? (count (list-bindings "/"))))
   (assert (add-queue "/" "guest" "guest" "my-queue" true))
   (assert (add-exchange "/" "guest" "guest" "my-exchange" "direct" true))
@@ -42,21 +45,21 @@
   (assert (delete-exchange  "/" "guest" "guest" "my-exchange"))
   (assert (delete-queue  "/" "guest" "guest" "my-queue")))
 
-(defn test-add-delete-and-list-vhosts []
+(defn add-delete-and-list-vhosts []
   ; one for default '/' vhost
   (assert (= 1 (count (list-vhosts))))
   (assert (add-vhost "my-vhost"))
   (assert (= 2 (count (list-vhosts))))
   (assert (delete-vhost "my-vhost")))
 
-(defn test-add-delete-and-list-users []
+(defn add-delete-and-list-users []
   ; default 'guest'
   (assert (= 1 (count (list-users))))
   (assert (add-user "my-user" "password"))
   (assert (= 2 (count (list-users))))
   (assert (delete-user "my-user")))
 
-(defn test-set-clear-permissions []
+(defn set-clear-permissions []
   ; when the user is first created, it is not associted with vhost until permissions are set
   ; ?how do you query for that user?
   (assert (add-user "my-user" "password"))
@@ -76,12 +79,12 @@
   (assert (stop-app))
   (assert (reset))
   (assert (start-app))
-  (test-add-delete-and-list-queues)
-  (test-add-delete-and-list-exchanges)
-  (test-add-delete-and-list-bindings)
-  (test-add-delete-and-list-vhosts)
-  (test-add-delete-and-list-users)
+  (add-delete-and-list-queues)
+  (add-delete-and-list-exchanges)
+  (add-delete-and-list-bindings)
+  (add-delete-and-list-vhosts)
+  (add-delete-and-list-users)
   ;;; test list-connections
-  (test-set-clear-permissions))
+  (set-clear-permissions))
 
 (monitor-suite)
