@@ -232,8 +232,8 @@
                                     (empty-args)
                                     *rabbit-instance*
                                     *cookie*)))]
-    (map (fn [u] (list-user-permissions u))
-         users)))
+    (flatten (map (fn [u] (list-user-permissions u))
+                  users))))
 
 (defn add-user [name password]
   (is-successful? #(execute *node-name*
