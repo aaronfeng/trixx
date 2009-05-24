@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>VHost</th>
+    <th>Config Permission</th>
+    <th>Write Permission</th>
+    <th>Read Permission</th>		
+  </tr>
+<%- @users.each do |e| %>
+  <tr>
+    <td><%=e.name%></td>
+    <td><%=e.vhost%></td>
+    <td><%=e.config_permission%></td>
+    <td><%=e.write_permission%></td>
+    <td><%=e.read_permission%></td>
+  </tr>
+<%- end %>

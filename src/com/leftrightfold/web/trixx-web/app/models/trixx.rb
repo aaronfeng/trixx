@@ -25,4 +25,10 @@ class Trixx
       Queue.new(queue_hash)
     end
   end	
+
+  def self.users
+    get("/users").collect do |user_hash|
+      User.new(user_hash)
+    end
+  end
 end
