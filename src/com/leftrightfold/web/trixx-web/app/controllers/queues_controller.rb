@@ -1,5 +1,5 @@
 class QueuesController < ApplicationController
-	def index
+  def index
     @queues = Trixx.queues
-	end
+  end
 end

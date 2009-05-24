@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-	map.resources :exchange
+  map.resources :exchange
   map.resources :queue	
   map.resources :rabbit	  
 

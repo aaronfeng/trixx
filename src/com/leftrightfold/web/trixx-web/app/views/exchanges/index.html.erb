@@ -1,17 +1,18 @@
 <table>
-	<tr>
-		<th>Name</th>
-		<th>VHost</th>
-		<th>Type</th>
-		<th>Durable</th>
-		<th>Auto-Delete</th>
-	</tr>
+  <tr>
+    <th>Name</th>
+    <th>VHost</th>
+    <th>Type</th>
+    <th>Durable</th>
+    <th>Auto-Delete</th>
+  </tr>
+
 <%- @exchanges.each do |e| %>
-	<tr>
-		<td><%=e.name%></td>
-		<td><%=e.vhost%></td>
-		<td><%=e.exchange_type%></td>
-		<td><%=e.durable%></td>
+  <tr>
+    <td><%=e.name%></td>
+    <td><%=e.vhost%></td>
+    <td><%=e.exchange_type%></td>
+    <td><%=e.durable%></td>
     <td><%=e.auto_delete%></td>
-	</tr>
+  </tr>
 <%- end %>

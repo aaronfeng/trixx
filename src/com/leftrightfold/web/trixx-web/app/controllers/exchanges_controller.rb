@@ -1,5 +1,5 @@
 class ExchangesController < ApplicationController
-	def index
+  def index
     @exchanges = Trixx.exchanges
-	end
+  end
 end

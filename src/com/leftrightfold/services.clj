@@ -31,27 +31,26 @@
   (GET "/bindings/*"
        (get-bindings (str "/" (params :*))))
 
-
   (GET "/users"
        (json-str list-users))
   (GET "/users/:user/permissions"
-     	 (json-str (list-user-permissions :user)))
+       (json-str (list-user-permissions :user)))
 
-	(PUT "/rabbit/stop"
-    	(if stop-app 200 500))
+  (PUT "/rabbit/stop"
+       (if stop-app 200 500))
   (PUT "/rabbit/stop/"
-			(if stop-app 200 500))
+       (if stop-app 200 500))
   (PUT "/rabbit/start"
-			(if start-app 200 500))
+       (if start-app 200 500))
   (PUT "/rabbit/start/"
-	 		(if stop-app 200 500))
+       (if stop-app 200 500))
   (PUT "/rabbit/reset"
        (reset))
   (PUT "/rabbit/reset/"
        (reset))
 
-	(ANY "*" 
-	      [404 "Page not found"])
+  (ANY "*" 
+       [404 "Page not found"])
 )
   
 (run-server {:port 8080}
