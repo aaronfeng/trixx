@@ -18,6 +18,13 @@
   (and (add-user name password)
        (set-permissions name vhost {:config config :write write :read read})))
 
+(defn set-user-permissions [name vhost config write read]
+  (set-permissions name vhost {:config config :write write :read read}))
+
+(defn user-permissions [name]
+  (let [user (list-user-permissions name)]
+      (if user [200 (json-str user)] [500 (str "User " name " can't be found.")])))
+
 (defroutes webservice
   (GET "/exchanges"
        (get-exchanges "/"))
@@ -38,7 +45,22 @@
     (json-str (list-users)))
   (GET "/users/"
     (json-str (list-users)))
-
+  (GET "/users/:user"
+    (user-permissions (params :user)))
+  (GET "/users/:user/"
+    (user-permissions (params :user)))
+  (PUT "/users/:user"
+    (set-user-permissions (params :name)
+                          (params :vhost)
+                          (params :config_permission)
+                          (params :write_permission)
+                          (params :read_permission)))
+  (PUT "/users/:user/"
+    (set-user-permissions (params :name)
+                          (params :vhost)
+                          (params :config_permission)
+                          (params :write_permission)
+                          (params :read_permission)))
   (POST "/users"
     (if (add-user-with-permissions (params :name) 
                                    (params :password)
@@ -47,7 +69,6 @@
                                    (params :write_permission)
                                    (params :read_permission))
       200 500))
-
   (POST "/users/"
     (if (add-user-with-permissions (params :name) 
                                    (params :password)

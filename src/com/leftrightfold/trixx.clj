@@ -215,14 +215,16 @@
        (as-seq (execute-list-permissions vhost "list_vhost_permissions"))))
 
 (defn list-user-permissions [u]
-  (map (fn [x] 
-	 (struct user
-		 u
-		 (value (_1st x))
-		 (value (_2nd x))
-		 (value (_3rd x))
-		 (value (_4th x))))
-       (as-seq (execute-list-permissions u "list_user_permissions"))))
+  (first (remove nil? (map (fn [x] 
+                             (if (and (instance? OtpErlangTuple x) 
+                                      (= (count (.elements x)) 4))
+                               (struct user
+                                       u
+                                       (value (_1st x))
+                                       (value (_2nd x))
+                                       (value (_3rd x))
+                                       (value (_4th x)))))
+                           (as-seq (execute-list-permissions u "list_user_permissions"))))))
 
 (defn list-users []
   (let [users (map (fn [x] (value x)) 

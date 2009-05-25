@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :exchange
   map.resources :queue	
   map.resources :rabbit	  
-  map.resources :user
+  map.resources :users
 
   map.root :controller => "home"
 
