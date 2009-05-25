@@ -6,12 +6,12 @@
     <th>Write Permission</th>
     <th>Read Permission</th>		
   </tr>
-<%- @users.each do |e| %>
+<%- @users.each do |u| %>
   <tr>
-    <td><%=e.name%></td>
-    <td><%=e.vhost%></td>
-    <td><%=e.config_permission%></td>
-    <td><%=e.write_permission%></td>
-    <td><%=e.read_permission%></td>
+    <td><%=u.name%></td>
+    <td><%=u.vhost%></td>
+    <td><%=u.config_permission%></td>
+    <td><%=u.write_permission%></td>
+    <td><%=u.read_permission%></td>
   </tr>
 <%- end %>

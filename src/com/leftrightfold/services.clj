@@ -14,7 +14,11 @@
 (defn get-bindings [vhost]
   (json-str (list-bindings vhost)))
 	
-(defroutes exchanges
+(defn add-user-with-permissions [name password vhost config write read]
+  (and (add-user name password)
+       (set-permissions name vhost {:config config :write write :read read})))
+
+(defroutes webservice
   (GET "/exchanges"
        (get-exchanges "/"))
   (GET "/exchanges/*"
@@ -35,6 +39,24 @@
   (GET "/users/"
     (json-str (list-users)))
 
+  (POST "/users"
+    (if (add-user-with-permissions (params :name) 
+                                   (params :password)
+                                   (params :vhost)
+                                   (params :config_permission)
+                                   (params :write_permission)
+                                   (params :read_permission))
+      200 500))
+
+  (POST "/users/"
+    (if (add-user-with-permissions (params :name) 
+                                   (params :password)
+                                   (params :vhost)
+                                   (params :config_permission)
+                                   (params :write_permission)
+                                   (params :read_permission))
+      200 500))
+
   ;;; needs to handle when user can't be found in trixx
   (GET "/users/:user/permissions"
     (json-str (list-user-permissions (params :user))))
@@ -42,21 +64,21 @@
     (json-str (list-user-permissions (params :user))))
 
   (PUT "/rabbit/stop"
-       (if stop-app 200 500))
+       (if (stop-app) 200 500))
   (PUT "/rabbit/stop/"
-       (if stop-app 200 500))
+       (if (stop-app) 200 500))
   (PUT "/rabbit/start"
-       (if start-app 200 500))
+       (if (start-app) 200 500))
   (PUT "/rabbit/start/"
-       (if stop-app 200 500))
+       (if (stop-app) 200 500))
   (PUT "/rabbit/reset"
-       (reset))
+       (if (reset) 200 500))
   (PUT "/rabbit/reset/"
-       (reset))
+       (if (reset) 200 500))
 
   (ANY "*" 
        [404 "Page not found"])
 )
   
 (run-server {:port 8080}
-"/*" (servlet exchanges))
+"/*" (servlet webservice))

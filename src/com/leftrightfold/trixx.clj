@@ -47,7 +47,7 @@
                            :recv-oct :recv-cnt :send-oct :send-cnt :send-pend
                            :state :channels :user :vhost :timeout :frame-max)
 
-(defstruct user :name :host :config :write :read)
+(defstruct user :name :vhost :config :write :read)
 
 ;;; erlang helper
 (defmulti value class)

@@ -8,5 +8,10 @@ class RabbitController < ApplicationController
     Trixx.start
     redirect_to :action => "index"
   end
+
+  def reset
+    Trixx.reset
+    redirect_to :action => "index"
+  end
 end
 
