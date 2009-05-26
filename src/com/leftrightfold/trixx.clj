@@ -105,9 +105,10 @@
 
 (defn create-args [& args]
   (OtpErlangList. 
-   (into-array OtpErlangBinary 
+   (into-array OtpErlangObject 
 	       (map (fn [x] 
-                      (if (instance? OtpErlangBinary x)
+                      (if (or (instance? OtpErlangBinary x)
+                              (instance? OtpErlangTuple x))
                         x
                         (OtpErlangBinary. (.getBytes (str x)))))
 		    args))))
@@ -325,9 +326,10 @@
 
 
 (defn valid-user [name password]
-  (let [user (execute "test" "rabbit_access_control" "check_login" 
+  (let [user (execute *node-name* "rabbit_access_control" "check_login" 
                       (create-args (OtpErlangBinary. (.getBytes "PLAIN"))  
                                    (OtpErlangBinary. (.getBytes (str name "\u0000" password)))) 
                       *rabbit-instance* *cookie*)]
     (is-user user)))
+
 
