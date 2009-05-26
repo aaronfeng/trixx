@@ -30,12 +30,6 @@ class Trixx
     end
   end	
 
-  def self.users
-    get("/users").collect do |user_hash|
-      User.new(user_hash)
-    end
-  end
-
   def self.bindings
     get("/bindings").collect do |binding_hash|
       Binding.new(binding_hash)
@@ -46,7 +40,13 @@ class Trixx
     get("/connections").collect do |connection_hash|
       Connection.new(connection_hash)
     end
-  end  
+  end
+  
+  def self.users
+    get("/users").collect do |user_hash|
+      User.new(user_hash)
+    end
+  end 
   
   def self.update_user_atrributes(attributes)
     result = put("/users/#{attributes[:name]}", :query => { :name              => name, 
@@ -57,7 +57,7 @@ class Trixx
     User.new(attributes) if result.code == 200
   end
 
-  def self.find_by_name(name) 
+  def self.find_user_by_name(name) 
     # should throw an exception if result.code is not 200
     result = get("/users/#{name}")
     User.new(result.to_hash) if result.code == 200 

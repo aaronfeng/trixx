@@ -4,12 +4,12 @@ class UsersController < ApplicationController
   end
 
   def show 
-    @user = Trixx.find_by_name(params[:id])
+    @user = Trixx.find_user_by_name(params[:id])
     # check for nil user
   end
 
   def edit
-    @user = Trixx.find_by_name(params[:id])
+    @user = Trixx.find_user_by_name(params[:id])
   end
 
   def update
