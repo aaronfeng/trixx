@@ -66,7 +66,7 @@
   (assert (set-permissions "my-user" "/" {:config "c" :write "w" :read "r"}))
   ;;; needs to find my-user
   
-  (let [user (first (list-user-permissions "my-user"))]
+  (let [user (list-user-permissions "my-user")]
     (assert (= "c" (:config user)))
     (assert (= "w" (:write user)))
     (assert (= "r" (:read user))))
