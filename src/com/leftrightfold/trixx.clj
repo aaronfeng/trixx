@@ -328,6 +328,6 @@
   (let [user (execute "test" "rabbit_access_control" "check_login" 
                       (create-args (OtpErlangBinary. (.getBytes "PLAIN"))  
                                    (OtpErlangBinary. (.getBytes (str name "\u0000" password)))) 
-                      "rabbit@rabbit" "ZIPUHHCWVGYMCGTRPLET")]
+                      *rabbit-instance* *cookie*)]
     (is-user user)))
 
