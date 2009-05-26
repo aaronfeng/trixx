@@ -2,7 +2,8 @@
   (:use com.leftrightfold.trixx)
   (:use clojure.contrib.json.write)
   (:use compojure)
-  (:use clojure.contrib.str-utils))
+  (:use clojure.contrib.str-utils)
+  (:import java.net.URLDecoder))
 
 
 (defn get-exchanges [vhost]
@@ -15,8 +16,9 @@
   (json-str (list-bindings vhost)))
 	
 (defn add-user-with-permissions [name password vhost config write read]
-  (and (add-user name password)
-       (set-permissions name vhost {:config config :write write :read read})))
+  (if (and (add-user name password)
+           (set-permissions name vhost {:config config :write write :read read}))
+    200 500))
 
 (defn set-user-permissions [name vhost config write read]
   (set-permissions name vhost {:config config :write write :read read}))
@@ -24,6 +26,11 @@
 (defn user-permissions [name]
   (let [user (list-user-permissions name)]
       (if user [200 (json-str user)] [500 (str "User " name " can't be found.")])))
+
+(defn user-delete [name]
+  ;;; figure out how to use compojure.http.request.decodeurl
+  (if (delete-user (URLDecoder/decode name "UTF-8"))
+    200 500))
 
 (defroutes webservice
   (GET "/exchanges"
@@ -62,21 +69,24 @@
                           (params :write_permission)
                           (params :read_permission)))
   (POST "/users"
-    (if (add-user-with-permissions (params :name) 
-                                   (params :password)
-                                   (params :vhost)
-                                   (params :config_permission)
-                                   (params :write_permission)
-                                   (params :read_permission))
-      200 500))
+    (add-user-with-permissions (params :name) 
+                               (params :password)
+                               (params :vhost)
+                               (params :config_permission)
+                               (params :write_permission)
+                               (params :read_permission)))
   (POST "/users/"
-    (if (add-user-with-permissions (params :name) 
-                                   (params :password)
-                                   (params :vhost)
-                                   (params :config_permission)
-                                   (params :write_permission)
-                                   (params :read_permission))
-      200 500))
+    (add-user-with-permissions (params :name) 
+                               (params :password)
+                               (params :vhost)
+                               (params :config_permission)
+                               (params :write_permission)
+                               (params :read_permission)))
+
+  (DELETE "/users/:user"
+    (user-delete (params :user)))
+  (DELETE "/users/:user/"
+    (user-delete (params :user)))
 
   ;;; needs to handle when user can't be found in trixx
   (GET "/users/:user/permissions"
@@ -97,8 +107,8 @@
   (PUT "/rabbit/reset/"
        (if (reset) 200 500))
 
-  (ANY "*" 
-       [404 "Page not found"])
+   (ANY "*" 
+     [404 "Page not found"])
 )
   
 (run-server {:port 8080}
