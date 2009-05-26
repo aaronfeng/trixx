@@ -34,19 +34,24 @@
 
 (defroutes webservice
   (GET "/exchanges"
-       (get-exchanges "/"))
+    (get-exchanges "/"))
   (GET "/exchanges/*"
-       (get-exchanges (str "/" (params :*))))
+    (get-exchanges (str "/" (params :*))))
 
   (GET "/queues"
-       (get-queues "/"))
+    (get-queues "/"))
   (GET "/queues/*"
-       (get-queues (str "/" (params :*))))
+    (get-queues (str "/" (params :*))))
 
   (GET "/bindings"
-       (get-bindings "/"))
+    (get-bindings "/"))
   (GET "/bindings/*"
-       (get-bindings (str "/" (params :*))))
+    (get-bindings (str "/" (params :*))))
+
+  (GET "/connections"
+    (json-str (list-connections)))
+  (GET "/connections/"
+    (json-str (list-connections)))
 
   (GET "/users"
     (json-str (list-users)))
@@ -77,8 +82,7 @@
                                (params :read_permission)))
   (POST "/users/"
     (add-user-with-permissions (params :name) 
-                               (params :password)
-                               (params :vhost)
+                               (params :password)                               (params :vhost)
                                (params :config_permission)
                                (params :write_permission)
                                (params :read_permission)))
@@ -95,21 +99,19 @@
     (json-str (list-user-permissions (params :user))))
 
   (PUT "/rabbit/stop"
-       (if (stop-app) 200 500))
+    (if (stop-app) 200 500))
   (PUT "/rabbit/stop/"
-       (if (stop-app) 200 500))
+    (if (stop-app) 200 500))
   (PUT "/rabbit/start"
-       (if (start-app) 200 500))
+    (if (start-app) 200 500))
   (PUT "/rabbit/start/"
-       (if (stop-app) 200 500))
+    (if (stop-app) 200 500))
   (PUT "/rabbit/reset"
-       (if (reset) 200 500))
+    (if (reset) 200 500))
   (PUT "/rabbit/reset/"
-       (if (reset) 200 500))
-
+    (if (reset) 200 500))
    (ANY "*" 
-     [404 "Page not found"])
-)
+     [404 "Page not found"]))
   
 (run-server {:port 8080}
 "/*" (servlet webservice))
