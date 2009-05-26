@@ -32,6 +32,10 @@
   (if (delete-user (URLDecoder/decode name "UTF-8"))
     200 500))
 
+(defn verify-login [name password]
+  (if (valid-user name password)
+    200 500))
+
 (defroutes webservice
   (GET "/exchanges"
     (get-exchanges "/"))
@@ -82,7 +86,8 @@
                                (params :read_permission)))
   (POST "/users/"
     (add-user-with-permissions (params :name) 
-                               (params :password)                               (params :vhost)
+                               (params :password)                               
+                               (params :vhost)
                                (params :config_permission)
                                (params :write_permission)
                                (params :read_permission)))
@@ -110,8 +115,17 @@
     (if (reset) 200 500))
   (PUT "/rabbit/reset/"
     (if (reset) 200 500))
-   (ANY "*" 
-     [404 "Page not found"]))
+
+  (POST "/sessions/authenticate"
+    (verify-login (params :name)
+                  (params :password)))
+
+  (POST "/sessions/authenticate/"
+    (verify-login (params :name)
+                  (params :password)))
+
+  (ANY "*" 
+    [404 "Page not found"]))
   
 (run-server {:port 8080}
-"/*" (servlet webservice))
+            "/*" (servlet webservice))

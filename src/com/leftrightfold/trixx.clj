@@ -106,7 +106,10 @@
 (defn create-args [& args]
   (OtpErlangList. 
    (into-array OtpErlangBinary 
-	       (map (fn [x] (OtpErlangBinary. (.getBytes (str x))))
+	       (map (fn [x] 
+                      (if (instance? OtpErlangBinary x)
+                        x
+                        (OtpErlangBinary. (.getBytes (str x)))))
 		    args))))
 
 (defn empty-args [] (create-args))
@@ -315,3 +318,16 @@
 
 (defn add-binding [vhost user password queue exchange routing-key]
   (is-successful? #(with-channel *server* vhost user password (.queueBind queue exchange routing-key))))
+
+
+(defn is-user [tuple]
+  (if (= (value (_1st tuple))"user") true false))
+
+
+(defn valid-user [name password]
+  (let [user (execute "test" "rabbit_access_control" "check_login" 
+                      (create-args (OtpErlangBinary. (.getBytes "PLAIN"))  
+                                   (OtpErlangBinary. (.getBytes (str name "\u0000" password)))) 
+                      "rabbit@rabbit" "ZIPUHHCWVGYMCGTRPLET")]
+    (is-user user)))
+

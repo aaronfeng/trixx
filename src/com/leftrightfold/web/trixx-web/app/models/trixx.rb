@@ -6,6 +6,12 @@ class Trixx
   format :json
   base_uri "http://localhost:8080"
   
+  def self.authenticate(name, password)
+    result = post("/sessions/authenticate", :query => { :name     => name,
+                                                        :password => password})
+    result.code == 200
+  end
+
   def self.stop
     put("/rabbit/stop")
   end
