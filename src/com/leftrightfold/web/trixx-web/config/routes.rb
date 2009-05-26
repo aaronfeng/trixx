@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :exchange
+  map.resources :binding
+  map.resources :connection   
   map.resources :queue	
   map.resources :rabbit	  
   map.resources :user

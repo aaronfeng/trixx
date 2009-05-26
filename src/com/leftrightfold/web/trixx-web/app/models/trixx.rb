@@ -7,11 +7,11 @@ class Trixx
   base_uri "http://localhost:8080"
   
   def self.stop
-    put("/rabbit/stop").inspect
+    put("/rabbit/stop")
   end
 
   def self.start
-    put("/rabbit/start").inspect
+    put("/rabbit/start")
   end
 	
   def self.exchanges
@@ -31,4 +31,16 @@ class Trixx
       User.new(user_hash)
     end
   end
+  
+  def self.bindings
+    get("/bindings").collect do |binding_hash|
+      Binding.new(binding_hash)
+    end
+  end
+  
+  def self.connections
+    get("/connections").collect do |connection_hash|
+      Connection.new(connection_hash)
+    end
+  end  
 end
