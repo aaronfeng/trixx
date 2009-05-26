@@ -4,6 +4,10 @@ The goal of Trixx is to build an administration and monitoring tool for RabbitMQ
 Trixx is written in Clojure and, therefore, is available for all languages that 
 run on JVM.
 
+A web-service layer has been added around core Trixx that returns JSON.  This
+enable easy consumption for non-JVM based languages.  Trixx Web Management
+Console is written in Ruby and should be JRuby compatible.
+
 Features of Trixx:
 
 * add exchange
@@ -77,20 +81,36 @@ Then the trixx server:
 
 Open your browser to any of:
 
+   http://localhost:8080/users
    http://localhost:8080/exchanges
    http://localhost:8080/queues
-   http://localhost:8080/list-users
-   http://localhost:8080/list-vhosts
-   http://localhost:8080/list-connections
+   http://localhost:8080/connections
    http://localhost:8080/bindings
+	
+   * There are more operations available, but cannot be queried in the browser. 
+     Use Web Management Console to explore these features.
 
 The trixx server is a web-services interface to the administrative features
-provided by the trixx library.  To run the Ruby Web Management Console, use
+provided by the trixx library which returns JSON.  To run the Ruby Web Management 
+Console, use
 
   ant run-www
 
 This runs on http://localhost:3000/
 
+   http://localhost:3000/users            - list all users
+   http://localhost:3000/users/new        - add a new user
+   http://localhost:3000/users/guest/edit - edit user "guest"
+   http://localhost:3000/users/guest      - delete user when DELETE http request is used
+
+   http://localhost:3000/exchanges        - list all exchanges
+   http://localhost:3000/queues           - list all queues
+   http://localhost:3000/bindings         - list all bindings
+   http://localhost:3000/connections      - list all connections
+
+   http://localhost:3000/rabbit           - stop, start and reset application
+
+   * More features coming soon.
 
 Dependencies
 --------------------------------------------------------------------------------
