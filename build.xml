@@ -117,7 +117,7 @@
     </exec>
   </target>
 
-  <target name="test" description="compile" >
+  <target name="test" description="jar" >
     <!-- run rabbit... -->
     <echo message="Ensure you've run rabbit before this task..." />
     <java classname="clojure.main" fork="true">
