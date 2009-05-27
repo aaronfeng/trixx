@@ -8,13 +8,16 @@
   <property name="project.url" value="http://github.com/aaronfeng/trixx/tree/master" />
   <property name="source.dir" value="${basedir}/src" />
   <property name="build.dir" value="${basedir}/classes" />
-  <property name="deps.dir" value="${basedir}/deps" />
+  <property name="build.deps.dir" value="${basedir}/deps/build" />
+  <property name="dev.deps.dir" value="${basedir}/deps/dev" />
   <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
   <property name="rabbitmq.server.dir" value="${rabbitmq.base.dir}/rabbitmq-server" />
-  <property name="deps.file" value="trixx-deps.zip" />
-  <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
+  <property name="build.deps.file" value="trixx-deps.zip" />
+  <property name="build.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${build.deps.file}" />
+  <property name="dev.deps.file" value="trixx-dev-deps.zip" />
+  <property name="dev.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${dev.deps.file}" />
 
   <property name="erlang.cookie.file" value="${user.home}/.erlang.cookie" />
   <loadfile property="com.leftrightfold.trixx.cookie" srcFile="${erlang.cookie.file}" />
@@ -24,7 +27,7 @@
   <path id="classpath">
     <path location="${build.dir}" />
     <path location="${source.dir}" />
-    <fileset dir="${deps.dir}">
+    <fileset dir="${build.deps.dir}">
       <include name="*.jar" />
     </fileset>
   </path>
@@ -68,8 +71,12 @@
   </target>
 
   <target name="fetch-deps" description="download dependencies">
-    <get usetimestamp="true" description="Trixx dependencies." src="${deps.url}" dest="${deps.file}" />
-    <unzip src="${deps.file}" dest="." />
+    <get usetimestamp="true" description="Trixx dependencies." src="${build.deps.url}" dest="${build.deps.file}" />
+    <unzip src="${build.deps.file}" dest="." />
+<!--
+    <get usetimestamp="true" description="Trixx Development Dependencies." src="${dev.deps.url}" dest="${dev.deps.file}" />
+    <unzip src="${dev.deps.file}" dest="." />
+-->
   </target>
 
   <target name="run-trixx" description="Run the compojure server" >
@@ -101,5 +108,22 @@
       <arg value="src/com/leftrightfold/web/trixx-web/script/server" />
     </exec>
   </target>
+
+  <target name="test" description="compile" >
+    <!-- run rabbit... -->
+    <echo message="Ensure you've run rabbit before this task..." />
+    <java classname="clojure.main" fork="true">
+      <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
+      <arg value="test/src/com/leftrightfold/trixx-test.clj" />
+      <classpath>
+          <path refid="classpath" />
+          <path location="${target.dir}/${jar.file.name}" />
+      </classpath>
+    </java>
+    <!-- bring rabbit down... -->
+  </target>
+
 
 </project>

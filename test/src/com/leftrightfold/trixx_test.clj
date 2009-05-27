@@ -17,7 +17,7 @@
 ;;
 ;;  Contributor(s): ______________________________________.
 
-(ns com.leftrightfold.trixx.test
+(ns com.leftrightfold.trixx-test
   (:use com.leftrightfold.trixx))
 
 (defn add-delete-and-list-queues []
@@ -76,9 +76,9 @@
   (assert (delete-user "my-user")))
 
 (defn monitor-suite []
-  (assert (stop-app))
-  (assert (reset))
-  (assert (start-app))
+;;   (assert (stop-app))
+;;   (assert (reset))
+;;   (assert (start-app))
   (add-delete-and-list-queues)
   (add-delete-and-list-exchanges)
   (add-delete-and-list-bindings)
