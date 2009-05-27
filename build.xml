@@ -32,6 +32,14 @@
     </fileset>
   </path>
   
+  <path id="runtime.classpath">
+    <path location="${build.dir}" />
+    <fileset dir="${target.dir}" includes="*.jar" />
+    <fileset dir="${build.deps.dir}">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+  
   <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
       <arg value="srcdist" />
@@ -116,10 +124,9 @@
       <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
       <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
       <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
-      <arg value="test/src/com/leftrightfold/trixx-test.clj" />
+      <arg value="test/src/com/leftrightfold/trixx_test.clj" />
       <classpath>
           <path refid="classpath" />
-          <path location="${target.dir}/${jar.file.name}" />
       </classpath>
     </java>
     <!-- bring rabbit down... -->
