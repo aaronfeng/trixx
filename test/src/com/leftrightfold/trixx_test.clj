@@ -20,50 +20,141 @@
 (ns com.leftrightfold.trixx-test
   (:use com.leftrightfold.trixx))
 
-(defn add-delete-and-list-queues []
-  (assert (zero? (count (list-queues "/"))))
-  (add-queue "/" "guest" "guest" "my-queue" true)
-  (assert (= 1 (count (list-queues "/"))))
-  (delete-queue  "/" "guest" "guest" "my-queue")
-  (assert (zero? (count (list-queues "/")))))
+(defn getprop
+  "Lookup as a system property (namespaced by
+  'com.leftrightfold.trixx-test'), returning the given default if the
+  property is not set."
+  [k def]
+  (or (System/getProperty (str "com.leftrightfold.trixx-test." k))
+      def))
 
-(defn add-delete-and-list-exchanges []
-  ; 7 default exchanges ships with rabbit by default
-  (assert (= 7 (count (list-exchanges "/"))))
-  (add-exchange "/" "guest" "guest" "my-exchange" "direct" true)
-  (assert (= 8 (count (list-exchanges "/"))))
-  (delete-exchange  "/" "guest" "guest" "my-exchange")
-  (assert (= 7 (count (list-exchanges "/")))))
+(def *rabbit-user*     (getprop "user"     "guest"))
+(def *rabbit-password* (getprop "password" "guest"))
+(def *vhost*           (getprop "vhost"    "/"))
+(def *queue-name*      (getprop "queue"    "com.leftrightfold.trixx-test.test-queue"))
+(def *exchange-name*   (getprop "exchange" "com.leftrightfold.trixx-test.test-queue"))
 
-(defn add-delete-and-list-bindings []
-  (assert (zero? (count (list-bindings "/"))))
-  (assert (add-queue "/" "guest" "guest" "my-queue" true))
-  (assert (add-exchange "/" "guest" "guest" "my-exchange" "direct" true))
-  (assert (add-binding "/" "guest" "guest" "my-queue" "my-exchange" "my-key"))
-  ; when creating a queue, a default binding is created without routing key.
-  (assert (= 2 (count (list-bindings "/"))))
-  (assert (delete-exchange  "/" "guest" "guest" "my-exchange"))
-  (assert (delete-queue  "/" "guest" "guest" "my-queue")))
+(def *test-suite*   (atom []))
+(def *test-results* (atom { :passed 0 :failed 0 }))
 
-(defn add-delete-and-list-vhosts []
+(defn passed!
+  "Track that a test passed."
+  [name]
+  (reset! *test-results*
+          (assoc @*test-results* :passed (+ 1 (:passed @*test-results*)))))
+
+(defn failed!
+  "Track that a test failed."
+  [name]
+  (reset! *test-results*
+          (assoc @*test-results* :failed (+ 1 (:failed @*test-results*)))))
+
+
+(defmacro deftest
+  "Define a test (adding it to the suite)."
+  [name & body]
+  `(do
+     (reset! *test-suite*
+             (cons ['~name
+                    '~body
+                    (fn []
+                      ~@body)]
+                   @*test-suite*))))
+
+(defmacro assert=
+  "Assert equality."
+  [left right & [msg]]
+  `(let [lres# ~left
+         rres# ~right
+         msg# ~msg]
+     (if (= lres# rres#)
+       true
+       (if msg#
+         (throw (RuntimeException. (format "assert= failure: %s : expected '%s' got '%s' left=%s right=%s"
+                                           msg# lres# rres# '~left '~right)))
+         (throw (RuntimeException. (format "assert= failure: expected '%s' got '%s' left=%s right=%s"
+                                           lres# rres# '~left '~right)))))))
+
+(defmacro assert-true
+  "Assert truth."
+  [expr & [msg]]
+  `(let [res# ~expr
+         msg# ~msg]
+     (if (not res#)
+       (if msg#
+         (throw (RuntimeException. (format "assert= failure: %s : expected true, res='%s' expr=%s"
+                                           msg# res# '~expr)))
+         (throw (RuntimeException. (format "assert= failure: expected true, res='%s' expr=%s"
+                                           res# '~expr)))))))
+
+(defmacro assert-false
+  "Assert falsity."
+  [expr & [msg]]
+  `(let [res# ~expr
+         msg# ~msg]
+     (if res#
+       (if msg#
+         (throw (RuntimeException. (format "assert= failure: %s : expected false, res='%s' expr=%s"
+                                           msg# res# '~expr)))
+         (throw (RuntimeException. (format "assert= failure: expected false, res='%s' expr=%s"
+                                           res# '~expr)))))))
+
+;; (com.leftrightfold.trixx/delete-queue *vhost* *rabbit-user* *rabbit-password* *queue-name*)
+;; (com.leftrightfold.trixx/add-queue *vhost* *rabbit-user* *rabbit-password* *queue-name* true)
+;; (map :name (com.leftrightfold.trixx/list-queues *vhost*))
+
+(defn queue-exists?    [vhost name] (some #(= (:name %) name)        (list-queues    vhost)))
+(defn exchange-exists? [vhost name] (some #(= (:name %) name)        (list-exchanges vhost)))
+(defn binding-exists?  [vhost name] (some #(= (:routing-key %) name) (list-bindings  vhost)))
+
+(deftest add-delete-and-list-queues
+  (add-queue *vhost* *rabbit-user* *rabbit-password* *queue-name* true)
+  (assert-true (queue-exists? *vhost* *queue-name*))
+  (delete-queue *vhost* *rabbit-user* *rabbit-password* *queue-name*)
+  (assert-false (queue-exists? *vhost* *queue-name*)))
+
+;; (map :name (list-exchanges *vhost*))
+(deftest add-delete-and-list-exchanges
+  (add-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name* "direct" true)
+  (assert-true (exchange-exists? *vhost* *exchange-name*))
+  (delete-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name*)
+  (assert-false (exchange-exists? *vhost* *exchange-name*)))
+
+
+;; (map :routing-key (list-bindings "/"))
+;; (binding-exists? "/" "my-key")
+(deftest add-delete-and-list-bindings
+  (do (add-queue *vhost* *rabbit-user* *rabbit-password* *queue-name* true)
+      (assert-true (queue-exists? *vhost* *queue-name*)))
+  (do (add-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name* "direct" true)
+      (assert-true (exchange-exists? *vhost* *queue-name*)))
+  (do (add-binding *vhost* *rabbit-user* *rabbit-password* *queue-name* *exchange-name* "my-key")
+      (assert-true (binding-exists? *vhost* "my-key")))
+  (do (delete-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name*)
+      (delete-queue    *vhost* *rabbit-user* *rabbit-password* *queue-name*)
+      (assert-false    (binding-exists? *vhost* "my-key"))  
+      (assert-false    (exchange-exists? *vhost* *queue-name*))
+      (assert-false    (queue-exists? *vhost* *queue-name*))))
+
+(deftest add-delete-and-list-vhosts
   ; one for default '/' vhost
   (assert (= 1 (count (list-vhosts))))
   (assert (add-vhost "my-vhost"))
   (assert (= 2 (count (list-vhosts))))
   (assert (delete-vhost "my-vhost")))
 
-(defn add-delete-and-list-users []
+(deftest add-delete-and-list-users
   ; default 'guest'
   (assert (= 1 (count (list-users))))
   (assert (add-user "my-user" "password"))
   (assert (= 2 (count (list-users))))
   (assert (delete-user "my-user")))
 
-(defn set-clear-permissions []
+(deftest set-clear-permissions
   ; when the user is first created, it is not associted with vhost until permissions are set
   ; ?how do you query for that user?
   (assert (add-user "my-user" "password"))
-  (assert (set-permissions "my-user" "/" {:config "c" :write "w" :read "r"}))
+  (assert (set-permissions "my-user" *vhost* {:config "c" :write "w" :read "r"}))
   ;;; needs to find my-user
   
   (let [user (list-user-permissions "my-user")]
@@ -71,20 +162,41 @@
     (assert (= "w" (:write user)))
     (assert (= "r" (:read user))))
 
-  (assert (clear-permissions "my-user" "/"))
+  (assert (clear-permissions "my-user" *vhost*))
   (assert (list-user-permissions "my-user"))
   (assert (delete-user "my-user")))
 
-(defn monitor-suite []
-;;   (assert (stop-app))
-;;   (assert (reset))
-;;   (assert (start-app))
-  (add-delete-and-list-queues)
-  (add-delete-and-list-exchanges)
-  (add-delete-and-list-bindings)
-  (add-delete-and-list-vhosts)
-  (add-delete-and-list-users)
-  ;;; test list-connections
-  (set-clear-permissions))
+(deftest test-list-connections
+  (assert (= 0 (count (list-connections)))))
 
-(monitor-suite)
+(defn run-tests 
+  "Run the suite of registered tests."
+  []
+  (doseq [[name form test] @*test-suite*]
+    (prn (format "running: %s" name))
+    (try
+     (do
+       (test)
+       (passed! name))
+     (catch Exception e
+       (failed! name)
+       (prn (format "%s failed: %s : %s" name e form))
+       (.printStackTrace e)))
+    (test)))
+
+(defn test-report
+  "Report on the results of the test suite."
+  []
+  (let [passed (:passed @*test-results*)
+        failed (:failed @*test-results*)
+        total  (+ passed failed)]
+    (prn (format "TESTS PASSED: %s (%3.2f%%)" passed (/ (* 100.0 passed) total)))
+    (prn (format "TESTS FAILED: %s (%3.2f%%)" failed (/ (* 100.0 failed) total)))
+    (prn (format "TEST SUITE %s" (if (zero? failed)
+                                   "PASSED"
+                                   "FAILED")))))
+
+(do 
+  (run-tests)
+  (test-report))
+

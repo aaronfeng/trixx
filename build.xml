@@ -8,8 +8,7 @@
   <property name="project.url" value="http://github.com/aaronfeng/trixx/tree/master" />
   <property name="source.dir" value="${basedir}/src" />
   <property name="build.dir" value="${basedir}/classes" />
-  <property name="build.deps.dir" value="${basedir}/deps/build" />
-  <property name="dev.deps.dir" value="${basedir}/deps/dev" />
+  <property name="deps.dir" value="${basedir}/deps" />
   <property name="target.dir" value="${basedir}/build/lib" />
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
@@ -27,19 +26,28 @@
   <path id="classpath">
     <path location="${build.dir}" />
     <path location="${source.dir}" />
-    <fileset dir="${build.deps.dir}">
+    <fileset dir="${deps.dir}">
       <include name="*.jar" />
     </fileset>
   </path>
   
-  <path id="runtime.classpath">
-    <path location="${build.dir}" />
-    <fileset dir="${target.dir}" includes="*.jar" />
-    <fileset dir="${build.deps.dir}">
+  <path id="emma.lib">
+    <fileset dir="${basedir}/deps/test">
       <include name="*.jar" />
     </fileset>
   </path>
   
+  <!-- directory that contains emma.jar and emma_ant.jar: -->
+  <property name="emma.dir" value="${basedir}/deps/test" />
+  
+  <path id="emma.lib" >
+    <pathelement location="${emma.dir}/emma.jar" />
+    <pathelement location="${emma.dir}/emma_ant.jar" />
+  </path>
+
+  <taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+
   <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
       <arg value="srcdist" />
@@ -81,10 +89,6 @@
   <target name="fetch-deps" description="download dependencies">
     <get usetimestamp="true" description="Trixx dependencies." src="${build.deps.url}" dest="${build.deps.file}" />
     <unzip src="${build.deps.file}" dest="." />
-<!--
-    <get usetimestamp="true" description="Trixx Development Dependencies." src="${dev.deps.url}" dest="${dev.deps.file}" />
-    <unzip src="${dev.deps.file}" dest="." />
--->
   </target>
 
   <target name="run-trixx" description="Run the compojure server" >
@@ -117,10 +121,21 @@
     </exec>
   </target>
 
+  <target name="emma" description="turns on EMMA instrumentation/reporting" >
+    <property name="emma.enabled" value="true" />
+  </target>
+
   <target name="test" depends="jar" >
+    <mkdir dir="${basedir}/build/emma" />
     <!-- run rabbit... -->
     <echo message="Ensure you've run rabbit before this task..." />
-    <java classname="clojure.main" fork="true">
+    <emmajava classname="clojure.main" fork="true" libclasspathref="emma.lib"
+              fullmetadata="yes" sourcepath="${source.dir}"
+              enabled="${emma.enabled}" >
+      <filter includes="com.leftrightfold.*" />
+      <html outfile="${basedir}/build/emma/coverage.html"/>
+      <xml  outfile="${basedir}/build/emma/coverage.xml" />
+      <txt  outfile="${basedir}/build/emma/coverage.txt" />
       <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
       <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
       <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
@@ -128,7 +143,7 @@
       <classpath>
           <path refid="classpath" />
       </classpath>
-    </java>
+    </emmajava>
     <!-- bring rabbit down... -->
   </target>
 
@@ -154,7 +169,5 @@
       <arg value="rgen" />
     </exec>
   </target>
-
-
 
 </project>
