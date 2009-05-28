@@ -14,9 +14,7 @@
   <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
   <property name="rabbitmq.server.dir" value="${rabbitmq.base.dir}/rabbitmq-server" />
   <property name="build.deps.file" value="trixx-deps.zip" />
-  <property name="build.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${build.deps.file}" />
-  <property name="dev.deps.file" value="trixx-dev-deps.zip" />
-  <property name="dev.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${dev.deps.file}" />
+  <property name="build.deps.url" value="http://cloud.github.com/downloads/aaronfeng/trixx/${build.deps.file}" />
 
   <property name="erlang.cookie.file" value="${user.home}/.erlang.cookie" />
   <loadfile property="com.leftrightfold.trixx.cookie" srcFile="${erlang.cookie.file}" />
