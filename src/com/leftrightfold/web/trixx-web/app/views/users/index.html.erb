@@ -13,5 +13,6 @@
     <td><%=u.config_permission%></td>
     <td><%=u.write_permission%></td>
     <td><%=u.read_permission%></td>
+    <td><%= link_to 'Destroy', u, :confirm => "Are you sure?", :method => :delete %></td>
   </tr>
 <%- end %>

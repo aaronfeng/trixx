@@ -15,9 +15,13 @@ class Trixx
   end
 
   def self.reset
-    put("/rabbit/reset").inspect
+    put("/rabbit/reset")
   end
 	
+	def self.status
+    Status.new(get("/rabbit/status"))
+  end
+  
   def self.exchanges
     get("/exchanges").collect do |exchange_hash|
       Exchange.new(exchange_hash)
@@ -50,17 +54,24 @@ class Trixx
   
   def self.update_user_atrributes(attributes)
     result = put("/users/#{attributes[:name]}", :query => { :name              => name, 
-                                                   :vhost             => vhost, 
-                                                   :config_permission => config_permission,
-                                                   :write_permission  => write_permission,
-                                                   :read_permission   => read_permission })
+                                                            :vhost             => vhost, 
+                                                            :config_permission => config_permission,
+                                                            :write_permission  => write_permission,
+                                                            :read_permission   => read_permission })
     User.new(attributes) if result.code == 200
   end
 
   def self.find_user_by_name(name) 
     # should throw an exception if result.code is not 200
-    result = get("/users/#{name}")
+    result = get("/users/#{URI.escape(name)}")
     User.new(result.to_hash) if result.code == 200 
+  end
+
+  def self.delete_user(name)
+    # should throw an exception if result.code is not 200
+    result = delete("/users/#{URI.escape(name)}")
+
+    true if result.code == 200
   end
 
   def self.add_user(name, password, vhost, config_permission, write_permission, read_permission)

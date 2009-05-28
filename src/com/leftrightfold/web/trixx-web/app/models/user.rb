@@ -10,4 +10,8 @@ class User
     @write_permission = attributes['write']
     @read_permission = attributes['read']
   end
+
+  def to_param
+    @name
+  end
 end

@@ -1,0 +1,21 @@
+<b>Status</b>
+<br/>
+
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Description</th>
+    <th>Version</th>
+  </tr>
+<% @status.running_applications.each do |app|%>
+  <tr>
+    <td><%=app.service%></td>
+    <td><%=app.description%></td>
+    <td><%=app.version%></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+Nodes: <%=@status.nodes.join(",")%>
+<br/>
+Running Nodes: <%=@status.running_nodes.join(",")%>

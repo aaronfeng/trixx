@@ -27,9 +27,9 @@
   (:use clojure.contrib.str-utils))
 
 (def *node-name* "trixx")
-(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "DEFAULT-ERLANG-COOKIE"))
+(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "MLHHNMGVCUOSMBQOBNZS"))
 (def *server* (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "localhost"))
-(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit@localhost"))
+(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit"))
 
 (prn (format "%s: *cookie*=%s" *ns* *cookie*))
 (prn (format "%s: *server*=%s" *ns* *server*))
@@ -48,6 +48,8 @@
                            :state :channels :user :vhost :timeout :frame-max)
 
 (defstruct user :name :vhost :config :write :read)
+
+(defstruct status-info :running-applications :nodes :running-nodes)
 
 ;;; erlang helper
 (defmulti value class)
@@ -159,12 +161,10 @@
       queues)))
 
 (defn list-bindings [vhost] 
-  (let [result (as-seq (execute *node-name* 
-                    "rabbit_exchange"
-                    "list_bindings" 
- 	            (create-args vhost) 
-	            *rabbit-instance* 
-                    *cookie*))]
+  (let [result (as-seq "list_bindings" 
+                       (create-args vhost) 
+                       *rabbit-instance* 
+                       *cookie*)]
     (map (fn [b] 
            (let [vhost (value (_2nd (_1st b)))
                  exchange (value (_4th (_1st b)))
@@ -180,6 +180,25 @@
 
 (defn start-app []
   (is-successful? #(execute *node-name* "rabbit" "start" (empty-args) *rabbit-instance* *cookie*)))
+
+(defn status []
+  (let [result (execute *node-name* 
+                        "rabbit" 
+                        "status" 
+                        (empty-args) 
+                        *rabbit-instance* 
+                        *cookie*)]
+    (let [running-apps 
+          (map (fn [a] 
+                 {
+                  :service (value (_1st a)) 
+                  :description (value (_2nd a)) 
+                  :version (value (_3rd a))}) (as-seq (_2nd (_1st result))))
+          nodes (map #(.atomValue %) (as-seq (_2nd (_2nd result))))
+          running-nodes (map #(.atomValue %) (as-seq (_2nd (_3rd result))))
+          ]
+      (struct status-info running-apps nodes running-nodes))
+    ))
 
 (defn reset []
   (is-successful? #(execute *node-name* "rabbit_mnesia" "reset" (empty-args) *rabbit-instance* 
@@ -199,7 +218,7 @@
     (map (fn [h] (value h)) result)))
 
 (defn execute-list-permissions [target command]
-  "Taget is either user name or host name"
+  "Target is either user name or host name"
   (execute *node-name* "rabbit_access_control" command
 	   (create-args target)
 	   *rabbit-instance* *cookie*))
@@ -269,10 +288,10 @@
               peer_port (value (_2nd (_5th conn)))
               recv-oct (value (_2nd (_6th conn)))
               recv-cnt (value (_2nd (_7th conn)))
-	            send-oct (value (_2nd (_8th conn)))
+	      send-oct (value (_2nd (_8th conn)))
               send-cnt (value (_2nd (_9th conn)))
               send-period (value (_2nd (_10th conn)))
-	            state (value (_2nd (_nth conn 10)))
+	      state (value (_2nd (_nth conn 10)))
               channels (value (_2nd (_nth conn 11)))
               user (value (_2nd (_nth conn 12)))
               vhost (value (_2nd (_nth conn 13)))

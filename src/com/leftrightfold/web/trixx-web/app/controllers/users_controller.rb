@@ -21,4 +21,9 @@ class UsersController < ApplicationController
                    params[:write_permission], params[:read_permission])
     redirect_to :action => "index"
   end
+
+  def destroy
+    Trixx.delete_user(params[:id])
+    redirect_to :action => "index"
+  end
 end
