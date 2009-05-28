@@ -132,5 +132,29 @@
     <!-- bring rabbit down... -->
   </target>
 
+  <!-- Expiremental: generate Java/Clojure structure definitions /
+       parsers from the Erlang/RabbitMQ record declarations -->
+  <target name="gen-rec-structs" description="Generate the RabbitMQ Structure Definitions">
+    <mkdir dir="build/ebin" />
+    <exec executable="erlc" searchpath="true" dir="${basedir}">
+      <arg value="-I" />
+      <arg value="rabbitmq/rabbitmq-server/include" />
+      <arg value="-o" />
+      <arg value="build/ebin" />
+      <arg value="src/erl/rgen.erl" />
+    </exec>
+    <exec executable="erl" searchpath="true" dir="${basedir}">
+      <arg value="-pa" />
+      <arg value="build/ebin" />
+      <arg value="-noinput" />
+      <arg value="-hidden" />
+      <arg value="-sname" />
+      <arg value="rgen" />
+      <arg value="-s" />
+      <arg value="rgen" />
+    </exec>
+  </target>
+
+
 
 </project>
