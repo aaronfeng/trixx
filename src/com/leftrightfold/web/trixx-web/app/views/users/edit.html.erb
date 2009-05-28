@@ -1,25 +1,26 @@
 <h1>Editing user</h1>
 
-<% form_tag :action => "create", :method => "put" do %>
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
   <p> 
-    <%= label_tag :name %><br />
-    <%= text_field_tag :name, @user.name %>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
   </p>
   <p> 
-    <%= label_tag :vhost %><br />
-    <%= text_field_tag :vhost, @user.vhost %>
+    <%= f.label :vhost %><br />
+    <%= f.text_field :vhost %>
   </p>
   <p> 
-    <%= label_tag :config_permission %><br />
-    <%= text_field_tag :config_permission, @user.config_permission %>
+    <%= f.label :config_permission %><br />
+    <%= f.text_field :config %>
   </p>
   <p> 
-    <%= label_tag :write_permission %><br />
-    <%= text_field_tag :write_permission, @user.write_permission %>
+    <%= f.label :write %><br />
+    <%= f.text_field :write %>
   </p>
   <p> 
-    <%= label_tag :read_permission %><br />
-    <%= text_field_tag :read_permission, @user.read_permission %>
+    <%= f.label :read %><br />
+    <%= f.text_field :read %>
   </p>
   <p> 
     <%= submit_tag 'Update' %>

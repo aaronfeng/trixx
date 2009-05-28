@@ -6,13 +6,13 @@
     <th>Write Permission</th>
     <th>Read Permission</th>		
   </tr>
-<%- @users.each do |u| %>
+<% @users.each do |user| %>
   <tr>
-    <td><%=u.name%></td>
-    <td><%=u.vhost%></td>
-    <td><%=u.config_permission%></td>
-    <td><%=u.write_permission%></td>
-    <td><%=u.read_permission%></td>
-    <td><%= link_to 'Destroy', u, :confirm => "Are you sure?", :method => :delete %></td>
+    <td><%=user.name%></td>
+    <td><%=user.vhost%></td>
+    <td><%=user.config%></td>
+    <td><%=user.write%></td>
+    <td><%=user.read%></td>
+    <td><%= link_to 'Destroy', { :controller => "users", :action => "destroy", :id => user.name }, :method => :delete, :confirm => "Are you sure?" %></td>
   </tr>
-<%- end %>
+<% end %>

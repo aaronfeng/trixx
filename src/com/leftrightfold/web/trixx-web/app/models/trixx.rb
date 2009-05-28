@@ -13,15 +13,18 @@ class Trixx
   end
 
   def self.stop
-    put("/rabbit/stop")
+    result = put("/rabbit/stop")
+    result.code == 200
   end
 
   def self.start
-    put("/rabbit/start")
+    result = put("/rabbit/start")
+    result.code == 200
   end
 
   def self.reset
-    put("/rabbit/reset").inspect
+    result = put("/rabbit/reset")
+    result.code == 200
   end
 	
   def self.exchanges
@@ -76,13 +79,14 @@ class Trixx
     true if result.code == 200
   end
 
-  def self.add_user(name, password, vhost, config_permission, write_permission, read_permission)
+  def self.add_user(user)
     # should throw an exception if result.code is not 200
-    result = post("/users", :query => { :name              => name, 
-                                        :password          => password, 
-                                        :vhost             => vhost, 
-                                        :config_permission => config_permission,
-                                        :write_permission  => write_permission,
-                                        :read_permission   => read_permission })
+    result = post("/users", :query => { :name      => user.name, 
+                                        :password  => user.password, 
+                                        :vhost     => user.vhost, 
+                                        :config    => user.config,
+                                        :write     => user.write,
+                                        :read      => user.read })
+    result.code == 200
   end
 end
