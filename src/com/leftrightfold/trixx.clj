@@ -27,9 +27,9 @@
   (:use clojure.contrib.str-utils))
 
 (def *node-name* "trixx")
-(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "MLHHNMGVCUOSMBQOBNZS"))
+(def *cookie* (or (System/getProperty "com.leftrightfold.trixx.cookie") "DEFAULT-ERLANG-COOKIE"))
 (def *server* (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "localhost"))
-(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit"))
+(def *rabbit-instance* (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit@localhost"))
 
 (prn (format "%s: *cookie*=%s" *ns* *cookie*))
 (prn (format "%s: *server*=%s" *ns* *server*))
