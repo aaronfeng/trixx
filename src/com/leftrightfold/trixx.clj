@@ -193,7 +193,9 @@
                  {
                   :service (value (_1st a)) 
                   :description (value (_2nd a)) 
-                  :version (value (_3rd a))}) (as-seq (_2nd (_1st result))))
+                  :version (value (_3rd a))
+                 }
+                ) (as-seq (_2nd (_1st result))))
           nodes (map #(.atomValue %) (as-seq (_2nd (_2nd result))))
           running-nodes (map #(.atomValue %) (as-seq (_2nd (_3rd result))))
           ]
