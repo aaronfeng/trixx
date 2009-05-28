@@ -169,6 +169,14 @@
 (deftest test-list-connections
   (assert (= 0 (count (list-connections)))))
 
+(deftest erlang-cookie
+  (let [orig-value @*cookie*]
+    (assert-false (empty? orig-value))
+    (clear-cookie!)
+    (assert-true (empty? @*cookie*))
+    (set-erlang-cookie!)
+    (assert= orig-value @*cookie*)))
+
 (defn run-tests 
   "Run the suite of registered tests."
   []

@@ -49,24 +49,26 @@
                (str (or *file* *ns*))
                (apply format args))))
 
+(defn set-erlang-cookie! []
 ;; Try to set the cookie, using various fallbacks
-(let [cookie (System/getProperty "com.leftrightfold.trixx.cookie")]
-  (if cookie 
-    (do
-      (reset! *cookie* cookie)
-      (log "set *cookie*=%s via system property (com.leftrightfold.trixx.cookie)" @*cookie*))))
-
-(if (not @*cookie*)
-  (let [file (str (System/getProperty "user.home") "/.erlang.cookie")
-        f (java.io.File. file)]
-    (if (.exists f)
+  (let [cookie (System/getProperty "com.leftrightfold.trixx.cookie")]
+    (if cookie 
       (do
-        (log "set *cookie*=%s via file: %s" @*cookie* file)
-        (load-cookie file)))))
+        (reset! *cookie* cookie)
+        (log "set *cookie*=%s via system property (com.leftrightfold.trixx.cookie)" @*cookie*))))
+
+  (if (not @*cookie*)
+    (let [file (str (System/getProperty "user.home") "/.erlang.cookie")
+          f (java.io.File. file)]
+      (if (.exists f)
+        (do
+          (log "set *cookie*=%s via file: %s" @*cookie* file)
+          (load-cookie file))))))
 
 ;; Any other fallbacks?
+(set-erlang-cookie!)
 
-(defn clear-cookie
+(defn clear-cookie!
   "Clears the erlang cookie, useful for REPL and testing."
   []
   (reset! *cookie* nil))
