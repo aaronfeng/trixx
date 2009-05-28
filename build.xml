@@ -13,8 +13,10 @@
   <property name="jar.file.name" value="${project.name}-${project.version}.jar" />
   <property name="rabbitmq.base.dir" value="${basedir}/rabbitmq" />
   <property name="rabbitmq.server.dir" value="${rabbitmq.base.dir}/rabbitmq-server" />
-  <property name="deps.file" value="trixx-deps.zip" />
-  <property name="deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${deps.file}" />
+  <property name="build.deps.file" value="trixx-deps.zip" />
+  <property name="build.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${build.deps.file}" />
+  <property name="dev.deps.file" value="trixx-dev-deps.zip" />
+  <property name="dev.deps.url" value="http://cloud.github.com/downloads/kyleburton/trixx/${dev.deps.file}" />
 
   <property name="erlang.cookie.file" value="${user.home}/.erlang.cookie" />
   <loadfile property="com.leftrightfold.trixx.cookie" srcFile="${erlang.cookie.file}" />
@@ -29,6 +31,23 @@
     </fileset>
   </path>
   
+  <path id="emma.lib">
+    <fileset dir="${basedir}/deps/test">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+  
+  <!-- directory that contains emma.jar and emma_ant.jar: -->
+  <property name="emma.dir" value="${basedir}/deps/test" />
+  
+  <path id="emma.lib" >
+    <pathelement location="${emma.dir}/emma.jar" />
+    <pathelement location="${emma.dir}/emma_ant.jar" />
+  </path>
+
+  <taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+
   <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
       <arg value="srcdist" />
@@ -68,8 +87,8 @@
   </target>
 
   <target name="fetch-deps" description="download dependencies">
-    <get usetimestamp="true" description="Trixx dependencies." src="${deps.url}" dest="${deps.file}" />
-    <unzip src="${deps.file}" dest="." />
+    <get usetimestamp="true" description="Trixx dependencies." src="${build.deps.url}" dest="${build.deps.file}" />
+    <unzip src="${build.deps.file}" dest="." />
   </target>
 
   <target name="run-trixx" description="Run the compojure server" >
@@ -99,6 +118,55 @@
   <target name="run-www" description="Run the Ruby Console Web App">
     <exec executable="ruby" searchpath="true" dir="${basedir}">
       <arg value="src/com/leftrightfold/web/trixx-web/script/server" />
+    </exec>
+  </target>
+
+  <target name="emma" description="turns on EMMA instrumentation/reporting" >
+    <property name="emma.enabled" value="true" />
+  </target>
+
+  <target name="test" depends="jar" >
+    <mkdir dir="${basedir}/build/emma" />
+    <!-- run rabbit... -->
+    <echo message="Ensure you've run rabbit before this task..." />
+    <emmajava classname="clojure.main" fork="true" libclasspathref="emma.lib"
+              fullmetadata="yes" sourcepath="${source.dir}"
+              enabled="${emma.enabled}" >
+      <filter includes="com.leftrightfold.*" />
+      <html outfile="${basedir}/build/emma/coverage.html"/>
+      <xml  outfile="${basedir}/build/emma/coverage.xml" />
+      <txt  outfile="${basedir}/build/emma/coverage.txt" />
+      <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
+      <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
+      <arg value="test/src/com/leftrightfold/trixx_test.clj" />
+      <classpath>
+          <path refid="classpath" />
+      </classpath>
+    </emmajava>
+    <!-- bring rabbit down... -->
+  </target>
+
+  <!-- Expiremental: generate Java/Clojure structure definitions /
+       parsers from the Erlang/RabbitMQ record declarations -->
+  <target name="gen-rec-structs" description="Generate the RabbitMQ Structure Definitions">
+    <mkdir dir="build/ebin" />
+    <exec executable="erlc" searchpath="true" dir="${basedir}">
+      <arg value="-I" />
+      <arg value="rabbitmq/rabbitmq-server/include" />
+      <arg value="-o" />
+      <arg value="build/ebin" />
+      <arg value="src/erl/rgen.erl" />
+    </exec>
+    <exec executable="erl" searchpath="true" dir="${basedir}">
+      <arg value="-pa" />
+      <arg value="build/ebin" />
+      <arg value="-noinput" />
+      <arg value="-hidden" />
+      <arg value="-sname" />
+      <arg value="rgen" />
+      <arg value="-s" />
+      <arg value="rgen" />
     </exec>
   </target>
 
