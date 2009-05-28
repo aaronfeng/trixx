@@ -27,6 +27,10 @@ class Trixx
     result.code == 200
   end
 	
+	def self.status
+    Status.new(get("/rabbit/status"))
+  end
+  
   def self.exchanges
     get("/exchanges").collect do |exchange_hash|
       Exchange.new(exchange_hash)
@@ -39,12 +43,6 @@ class Trixx
     end
   end	
 
-  def self.users
-    get("/users").collect do |user_hash|
-      User.new(user_hash)
-    end
-  end
-
   def self.bindings
     get("/bindings").collect do |binding_hash|
       Binding.new(binding_hash)
@@ -55,7 +53,13 @@ class Trixx
     get("/connections").collect do |connection_hash|
       Connection.new(connection_hash)
     end
-  end  
+  end
+  
+  def self.users
+    get("/users").collect do |user_hash|
+      User.new(user_hash)
+    end
+  end 
   
   def self.update_user_atrributes(attributes)
     result = put("/users/#{attributes[:name]}", :query => { :name              => name, 

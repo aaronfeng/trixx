@@ -52,31 +52,22 @@
   (GET "/bindings/*"
     (get-bindings (str "/" (params :*))))
 
+  (GET "/vhosts"
+    (json-str (list-vhosts)))
+
   (GET "/connections"
-    (json-str (list-connections)))
-  (GET "/connections/"
     (json-str (list-connections)))
 
   (GET "/users"
     (json-str (list-users)))
-  (GET "/users/"
-    (json-str (list-users)))
-  (GET "/users/:user"
-    (user-permissions (params :user)))
-  (GET "/users/:user/"
-    (user-permissions (params :user)))
+
   (PUT "/users/:user"
     (set-user-permissions (params :name)
                           (params :vhost)
                           (params :config)
                           (params :write)
                           (params :read)))
-  (PUT "/users/:user/"
-    (set-user-permissions (params :name)
-                          (params :vhost)
-                          (params :config)
-                          (params :write)
-                          (params :read)))
+
   (POST "/users"
     (add-user-with-permissions (params :name) 
                                (params :password)
@@ -84,43 +75,24 @@
                                (params :config)
                                (params :write)
                                (params :read)))
-  (POST "/users/"
-    (add-user-with-permissions (params :name) 
-                               (params :password)                               
-                               (params :vhost)
-                               (params :config)
-                               (params :write)
-                               (params :read)))
 
   (DELETE "/users/:user"
-    (user-delete (params :user)))
-  (DELETE "/users/:user/"
     (user-delete (params :user)))
 
   ;;; needs to handle when user can't be found in trixx
   (GET "/users/:user/permissions"
     (json-str (list-user-permissions (params :user))))
-  (GET "/users/:user/permissions/"
-    (json-str (list-user-permissions (params :user))))
 
+  (GET "/rabbit/status"
+    (json-str (status)))
   (PUT "/rabbit/stop"
     (if (stop-app) 200 500))
-  (PUT "/rabbit/stop/"
-    (if (stop-app) 200 500))
   (PUT "/rabbit/start"
-    (if (start-app) 200 500))
-  (PUT "/rabbit/start/"
     (if (stop-app) 200 500))
   (PUT "/rabbit/reset"
     (if (reset) 200 500))
-  (PUT "/rabbit/reset/"
-    (if (reset) 200 500))
 
   (POST "/sessions/authenticate"
-    (verify-login (params :name)
-                  (params :password)))
-
-  (POST "/sessions/authenticate/"
     (verify-login (params :name)
                   (params :password)))
 

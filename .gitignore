@@ -12,4 +12,4 @@ rabbitmq/rabbitmq-server/docs/*.gz
 rabbitmq/rabbitmq-server/ebin/*.beam
 *.pyc
 src/com/leftrightfold/web/trixx-web/log/
-src/com/leftrightfold/web/trixx-web/db/
+*.sqlite3
