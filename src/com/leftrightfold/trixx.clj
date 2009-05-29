@@ -32,17 +32,17 @@
 (def *server*          (atom (or (System/getProperty "com.leftrightfold.trixx.rabbit-server") "localhost")))
 (def *rabbit-instance* (atom (or (System/getProperty "com.leftrightfold.trixx.rabbit-instance") "rabbit")))
 
-(defn #^String load-cookie 
+(defn- #^String load-cookie 
   "Set the Erlang *cookie* from the contents of a local file (as a string)."
   [#^String cookie-file]
   (reset! *cookie* (slurp cookie-file)))
 
-(defn #^String load-default-cookie-file
+(defn- #^String load-default-cookie-file
   "Set the Erlang *cookie* from the file $HOME/.erlang.cookie (the default location)."
   []
   (load-cookie (str (System/getProperty "user.home") "/.erlang.cookie")))
 
-(defn log 
+(defn- log 
   "Log a message to stdout, to be replaced with a logging package."
   [& args]
   (prn (format "%s: %s"
@@ -128,7 +128,7 @@
 (defn _nth  [item i]  (.elementAt item i))
 (defn _boolean [b]    (Boolean/parseBoolean b))
 
-(defn otp->pull 
+(defn- otp->pull 
   "Most OTP types are nested strctures, this helper aids in pulling
 them apart.  The path is applied as a nested series of calls to
 .elementAt on the item."
@@ -139,7 +139,7 @@ them apart.  The path is applied as a nested series of calls to
       (recur (.elementAt item pos) path)
       item)))
 
-(defn otp->pullv 
+(defn- otp->pullv 
   "Most OTP types are nested strctures, this helper aids in pulling
 them apart.  The path is applied as a nested series of calls to
 .elementAt on the item.  The final value pulled is then passed to the
@@ -158,19 +158,19 @@ them apart.  The path is applied as a nested series of calls to
 ;; it breaks with the convention set by with-open, which is an implict
 ;; do block (which this is not).
 (defmacro with-channel
-  "Executes the given form (as if a doto) in the context of a fresh connection and channel."
+  "Executes the given form (as if a doto) in the context of a fresh connection and channgel."
   [server vhost user password f]
   `(with-open [connection# (create-conn ~server (create-conn-params ~vhost ~user ~password))
 	       channel# (.createChannel connection#)]
      (doto channel# ~f)))
 
-(defn #^Connection create-conn
+(defn- #^Connection create-conn
   "Create a connection from a fresh, discarded, connection factory."
   [#^String server #^ConnectionParameters params]
   (let [factory (ConnectionFactory. params)] factory
        (.newConnection factory server)))
 
-(defn create-conn-params
+(defn- create-conn-params
   "Create a com.rabbitmq.client.ConnectionParameters instance, with the given vhost,
 user and password set on the instance."
   [#^String vhost #^String user #^String password]
@@ -179,7 +179,7 @@ user and password set on the instance."
     (.setUsername    user)
     (.setPassword    password)))
 
-(defn #^OtpErlangList create-args
+(defn- #^OtpErlangList create-args
   "Helper to construct and return an OtpErlangList suitable for the var-args of rpc calls."
   [& args]
   (OtpErlangList. 
@@ -191,20 +191,17 @@ user and password set on the instance."
                         (OtpErlangBinary. (.getBytes (str x)))))
 		    args))))
 
-;; TODO[AF]: needs to handle the fact the result returned may not be a OtpErlangList
-;; TODO[KB]: discuss renaming to something like `otp-rpc-exec' rather than the more general `execute'
-(defn execute 
+;; TODO : needs to handle the fact the result returned may not be a OtpErlangList
+(defn- execute 
   "RPC Call into the erlang node."
-  ([from-node to-node command args rabbit-instance cookie]
-     (let [self (OtpSelf. from-node cookie)
-           peer (OtpPeer. rabbit-instance)]
-       (with-open [conn (.connect self peer)]
-         (.sendRPC conn to-node command args)
-         (.receiveRPC conn))))
   ([to-node command args]
-     (execute @*node-name* to-node command (apply create-args args) @*rabbit-instance* @*cookie*)))
+     (let [self (OtpSelf. @*node-name* @*cookie*)
+           peer (OtpPeer. @*rabbit-instance*)]
+       (with-open [conn (.connect self peer)]
+         (.sendRPC conn to-node command (apply create-args args))
+         (.receiveRPC conn)))))
 
-(defn execute->seq
+(defn- execute->seq
   "Execute the rpc call, coercing the result into a sequence (must be an OtpErlangList or OtpErlangTuple)."
   [to-node command args]
   (as-seq (execute to-node command args)))
@@ -215,7 +212,7 @@ user and password set on the instance."
 ;; difficult...also, it's often used to wrap an execute:
 ;; (is-successful? (execute ...)), which makes me think a helper
 ;; (execute? ...) might be in order...
-(defn is-successful? 
+(defn- is-successful? 
   "TODO: Describe this function."
   [f]
   (try (f) true
@@ -314,13 +311,12 @@ user and password set on the instance."
   (let [result (execute->seq "rabbit_access_control" "list_vhosts" [])]
     (map (fn [h] (value h)) result)))
 
-(defn execute-list-permissions->seq
+(defn- execute-list-permissions->seq
   "Taget is either user name or host name"
   [target command]
   (execute->seq "rabbit_access_control" command [target]))
 
 (defn list-vhost-permissions
-  "TODO: Document this function."
   [#^String vhost]
   (map #(struct user 
                (otp->pullv % 0)
@@ -330,8 +326,7 @@ user and password set on the instance."
                (otp->pullv % 3))
        (execute-list-permissions->seq vhost "list_vhost_permissions")))
 
-(defn list-user-permissions 
-  "TODO: Document this function."
+(defn list-user-permissions
   [u]
   (first (remove nil?
                  (map #(if (and (instance? OtpErlangTuple %) 
@@ -344,26 +339,22 @@ user and password set on the instance."
                                  (otp->pullv % 3)))
                       (execute-list-permissions->seq u "list_user_permissions")))))
 
-;; TODO[KB]: this used to be wrapped in a flatten, why do we need the flatten?
 (defn list-users 
-  "TODO: document this function."
   []
   (map
    #(list-user-permissions (value %))
    (execute->seq "rabbit_access_control" "list_users" [])))
 
+;; needs to handle user already exists error
 (defn add-user
-  "TODO: document this function."
   [#^String name #^String password]
   (is-successful? #(execute "rabbit_access_control" "add_user" [name password]))) 
 
 (defn delete-user
-  "TODO: document this function."
   [#^String name]
   (is-successful? #(execute "rabbit_access_control" "delete_user" [name]))) 
 
-(defn parse-ip
-  "TODO: document this function."
+(defn- parse-ip
   [addr_tuple]
   (let [part1 (_1st addr_tuple)
 	part2 (_2nd addr_tuple)
@@ -372,7 +363,6 @@ user and password set on the instance."
     (str part1 "." part2 "." part3 "." part4)))
 
 (defn list-connections 
-  "TODO: document this function."
   []
   (map #(let [pid           (otp->pullv % 0 1)
               address       (parse-ip (otp->pull % 1 1))
@@ -398,50 +388,41 @@ user and password set on the instance."
        (execute->seq "rabbit_networking" "connection_info_all" [])))
 
 (defn set-permissions
-  "TODO: document this function."
   [#^String user #^String vhost {config_regex :config write_regex :write read_regex :read}]
   (is-successful? #(execute "rabbit_access_control" "set_permissions" 
                             [user vhost config_regex write_regex read_regex])))
 
 (defn clear-permissions
-  "TODO: document this function."
   [#^String user #^String vhost]
   (is-successful? #(execute "rabbit_access_control" "set_permissions" [user vhost "^$" "^$" "^$"])))
 
 ;;; via protocol
 (defn add-queue
-  "TODO: document this function."
   [#^String vhost #^String user #^String password #^String queue-name durable]
   (is-successful? #(with-channel @*server* vhost user password (.queueDeclare queue-name durable))))
 
 (defn delete-queue
-  "TODO: document this function."
   [#^String vhost #^String user #^String password #^String queue-name]
   (is-successful? #(with-channel @*server* vhost user password (.queueDelete queue-name))))
 
 (defn add-exchange
-  "TODO: document this function."
   [#^String vhost #^String user #^String password #^String name type durable]
   (is-successful? #(with-channel @*server* vhost user password (.exchangeDeclare name type durable))))
 
 (defn delete-exchange
-  "TODO: document this function."
   [#^String vhost #^String user #^String password #^String name]
   (is-successful? #(with-channel @*server* vhost user password (.exchangeDelete name))))
 
 (defn add-binding
-  "TODO: document this function."
   [#^String vhost #^String user #^String password queue exchange routing-key]
   (is-successful? #(with-channel @*server* vhost user password (.queueBind queue exchange routing-key))))
 
-(defn is-user
-  "TODO: document this function."
+(defn- is-user
   [tuple]
   (= (otp->pullv tuple 0) 
      "user"))
 
-(defn valid-user 
-  "TODO: document this function."
+(defn- valid-user 
   [#^String name #^String password]
   (is-user (execute
             "rabbit_access_control" "check_login" 

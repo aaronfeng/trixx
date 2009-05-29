@@ -32,7 +32,7 @@
 (def *rabbit-password* (getprop "password" "guest"))
 (def *vhost*           (getprop "vhost"    "/"))
 (def *queue-name*      (getprop "queue"    "com.leftrightfold.trixx-test.test-queue"))
-(def *exchange-name*   (getprop "exchange" "com.leftrightfold.trixx-test.test-queue"))
+(def *exchange-name*   (getprop "exchange" "com.leftrightfold.trixx-test.test-exchange"))
 
 (def *test-suite*   (atom []))
 (def *test-results* (atom { :passed 0 :failed 0 }))
@@ -127,7 +127,7 @@
   (do (add-queue *vhost* *rabbit-user* *rabbit-password* *queue-name* true)
       (assert-true (queue-exists? *vhost* *queue-name*)))
   (do (add-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name* "direct" true)
-      (assert-true (exchange-exists? *vhost* *queue-name*)))
+      (assert-true (exchange-exists? *vhost* *exchange-name*)))
   (do (add-binding *vhost* *rabbit-user* *rabbit-password* *queue-name* *exchange-name* "my-key")
       (assert-true (binding-exists? *vhost* "my-key")))
   (do (delete-exchange *vhost* *rabbit-user* *rabbit-password* *exchange-name*)
@@ -141,7 +141,7 @@
   (assert (= 1 (count (list-vhosts))))
   (assert (add-vhost "my-vhost"))
   (assert (= 2 (count (list-vhosts))))
-  (assert (delete-vhost "my-vhost")))
+  (assert-true (delete-vhost "my-vhost")))
 
 (deftest add-delete-and-list-users
   ; default 'guest'
@@ -153,11 +153,11 @@
 (deftest set-clear-permissions
   ; when the user is first created, it is not associted with vhost until permissions are set
   ; ?how do you query for that user?
-  (assert (add-user "my-user" "password"))
-  (assert (set-permissions "my-user" *vhost* {:config "c" :write "w" :read "r"}))
-  ;;; needs to find my-user
+  (assert-true (add-user "my-user" "password"))
+  (assert-true (set-permissions "my-user" *vhost* {:config "c" :write "w" :read "r"}))
   
   (let [user (list-user-permissions "my-user")]
+    (assert-false (nil? user))
     (assert (= "c" (:config user)))
     (assert (= "w" (:write user)))
     (assert (= "r" (:read user))))
@@ -166,8 +166,9 @@
   (assert (list-user-permissions "my-user"))
   (assert (delete-user "my-user")))
 
-(deftest test-list-connections
-  (assert (= 0 (count (list-connections)))))
+;;; needs to hold a connection open during test then remove it after this test.
+;(deftest test-list-connections
+;  (assert (= 0 (count (list-connections)))))
 
 (deftest erlang-cookie
   (let [orig-value @*cookie*]
