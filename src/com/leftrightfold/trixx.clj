@@ -50,7 +50,7 @@
                (apply format args))))
 
 (defn set-erlang-cookie! []
-;; Try to set the cookie, using various fallbacks
+  ;; Try to set the cookie, using various fallbacks
   (let [cookie (System/getProperty "com.leftrightfold.trixx.cookie")]
     (if cookie 
       (do
@@ -65,7 +65,6 @@
           (log "set *cookie*=%s via file: %s" @*cookie* file)
           (load-cookie file))))))
 
-;; Any other fallbacks?
 (set-erlang-cookie!)
 
 (defn clear-cookie!
@@ -107,6 +106,7 @@
 (defmulti  value class)
 (defmethod value OtpErlangBinary [o] (String. (.binaryValue o)))
 (defmethod value OtpErlangLong   [o] (Integer/parseInt (str o)))
+(defmethod value OtpErlangAtom [o] (.atomValue o))
 (defmethod value :default        [o] (str o))
 (defmethod value nil             [o] "")
 
@@ -422,7 +422,7 @@ user and password set on the instance."
   (= (otp->pullv tuple 0) 
      "user"))
 
-(defn- valid-user 
+(defn valid-user 
   [#^String name #^String password]
   (is-user (execute
             "rabbit_access_control" "check_login" 
