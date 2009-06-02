@@ -39,13 +39,13 @@ class Trixx
 	
   def self.queues
     get("/queues").collect do |queue_hash|
-      Queue.new(queue_hash)
+      RabbitQueue.new(queue_hash)
     end
   end	
 
   def self.bindings
     get("/bindings").collect do |binding_hash|
-      Binding.new(binding_hash)
+      RabbitBinding.new(binding_hash)
     end
   end
   
@@ -60,6 +60,12 @@ class Trixx
       User.new(user_hash)
     end
   end 
+  
+  def self.vhosts
+    get("/vhosts").collect do |vhost|
+      Vhost.new(vhost)
+    end
+  end
   
   def self.update_user_atrributes(attributes)
     result = put("/users/#{attributes[:name]}", :query => { :name              => name, 

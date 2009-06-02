@@ -1,6 +1,23 @@
-<b>Status</b>
-<br/>
-
+<table>
+  <tr>
+    <td>
+      <% form_tag :controller => "rabbit", :action => "stop", :method => "put" do %>
+        <%= submit_tag "Stop Application" %>
+      <% end %>
+    </td>
+    <td>
+      <% form_tag :controller => "rabbit", :action => "start", :method => "put" do %>
+        <%= submit_tag "Start Application" %>
+      <% end %>
+    </td>
+    <td>
+      <% form_tag :controller => "rabbit", :action => "reset", :method => "put" do %>
+        <%= submit_tag "Reset Application" %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+<h1>Status</h1>
 <table>
   <tr>
     <th>Service</th>
@@ -16,6 +33,66 @@
 <% end %>
 </table>
 <br/>
-Nodes: <%=@status.nodes.join(",")%>
-<br/>
-Running Nodes: <%=@status.running_nodes.join(",")%>
+<hr size="1"/>
+
+<h1>Nodes</h1>
+<ul>
+  <% @status.nodes.each do |node| %>
+  <li><%= node + " (" + (@status.running_nodes.include?(node) ? "running" : "stopped") + ")"%></li>
+  <% end %>
+</ul>
+
+<% if @status.running_nodes.size > 0 %>
+  <hr size="1"/>
+  <br/>
+  <h1>VHosts</h1>
+  <%-@vhosts.each do |vhost| %>
+    <h2><%=vhost.name%></h2>
+    <br/>
+    <b>Exchanges:</b><br/>
+    <ul>
+      <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
+        <li><%=ex.name%></li>      
+        <ul>
+          <% @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }.each do |binding| %>
+            <li><%=binding.queue%> (<%=binding.routing_key%>)</li>
+          <% end %>
+        </ul>
+      <% end %>
+    </ul>
+
+    <br/>
+    <b>Queues:</b><br/>
+    <ul>
+      <% @queues.select {|q| q.vhost == vhost.name }.each do |queue| %>
+        <li><%=queue.name%> [<%=queue.durable%> / <%=queue.auto_delete%>]</li>
+        <ul>
+          <li><%=queue.messages%> messages</li>
+          <li><%=queue.messages_ready%> messages ready</li>
+          <li><%=queue.messages_unacknowledged%> messages unacknowledged</li>        
+          <li><%=queue.messages_uncommitted%> messages uncommitted</li>        
+          <li><%=queue.consumers%> consumers</li>        
+          <li><%=queue.transactions%> transactions</li>        
+          <li><%=queue.memory%> memory</li>                
+        </ul>
+      <% end %>
+    </ul>
+
+
+    <br/>
+    <b>Connections:</b>
+    <ul>
+      <% @connections.select {|c| c.vhost == vhost.name }.each do |c| %>
+        <li><%=c.pid%></li>
+      <% end %>
+    </ul>
+
+    <br/>
+    <b>Users:</b></br>
+    <ul>
+      <% @users.select {|u| u.vhost == vhost.name }.each do |u| %>
+        <li><%=u.name%></li>
+      <% end %>
+    </ul>
+  <%-end%>
+<% end %>

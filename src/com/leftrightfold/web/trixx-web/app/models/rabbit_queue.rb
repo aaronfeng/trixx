@@ -1,4 +1,4 @@
-class Queue
+class RabbitQueue
   attr_reader :name, :vhost, :durable, :auto_delete, :messages_ready
   attr_reader :messages_unacknowledged, :messages_uncommitted, :messages
   attr_reader :acks_uncommitted, :consumers, :transactions, :memory

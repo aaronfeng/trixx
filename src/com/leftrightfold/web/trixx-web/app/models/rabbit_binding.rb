@@ -1,4 +1,4 @@
-class Binding
+class RabbitBinding
   attr_reader :vhost, :exchange, :queue, :routing_key
 
   def initialize(attributes = {})
