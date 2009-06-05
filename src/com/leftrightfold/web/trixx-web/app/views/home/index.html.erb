@@ -18,26 +18,11 @@
   <%-@vhosts.each do |vhost| %>
     <div class="vhost">
       <h1>VHost: <%=vhost.name%></h1>
-      
-      <h2>Exchanges:</h2>
-        <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
-          <div class="exchange">
-          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
-          <% bindings = @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }%>
-          <% if bindings.size > 0 %>
-          Bindings:
-          <ul>
-            <% bindings.each do |binding| %>
-              <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
-            <% end %>
-          </ul>
-          <%end%>
-          </div>
-        <% end %>
-      </ul>
 
+      <% queues = @queues.select {|q| q.vhost == vhost.name }%>
+      <% if queues.size > 0 %>
       <h2>Queues:</h2>
-        <% @queues.select {|q| q.vhost == vhost.name }.each do |queue| %>
+        <% queues.each do |queue| %>
           <div class="queue">
             <h2>
               <%=image_tag("/images/database.png")%> QUEUE: <%=queue.name%>
@@ -101,23 +86,99 @@
             
           </div>
         <% end %>
-
-      <br/>
-      <h2>Connections:</h2>
-      <% @connections.select {|c| c.vhost == vhost.name }.each do |c| %>
-        PID: <%=c.pid%> PORT: <%=c.port%> PEER ADDRESS: <%=c.peer_address%> PEER PORT: <%=c.peer_port%>
-        <br/>
-        STATE: <%=c.state%> CHANNELS: <%=c.channels%> TIMEOUT: <%=c.timeout%>
-        <br/>
-        FRAME MAX: <%=c.frame_max%> 
-        USER: <%=c.user%> 
-        <br/>
-        RECV OCT: <%=c.recv_oct%> RECV CNT: <%=c.recv_cnt%>        
-        <br/>
-        SEND PEND: <%=c.send_pend%> SEND OCT: <%=c.send_oct%> SEND CNT: <%=c.send_cnt%>                
       <% end %>
 
-      <br/>
+      <% connections = @connections.select {|c| c.vhost == vhost.name } %>
+      <% if connections.size > 0 %>
+      <h2>Connections:</h2>
+      <% connections.each do |c| %>
+        <div class="connection">
+          <h2>Connection: <%=c.full_address%> from <%=c.full_peer_address%> by <%=c.user%> 
+          <div class="connection-status"><%=c.state%></div>
+          </h2>
+        
+        <div class="columns three-column">
+          <div class="column">
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.channels)%></strong>
+              channels
+            </div>
+          </div>
+          <div class="column">            
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.frame_max)%></strong>
+              frame-max
+            </div>
+          </div>
+          <div class="column">
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.timeout)%></strong>
+              timeout
+            </div>            
+          </div>
+        </div>
+        <br clear="all"/> 
+        <div class="columns three-column">
+          <div class="column">
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.recv_oct || 0)%></strong>
+              recv oct
+            </div>
+          </div>
+          <div class="column">            
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.recv_cnt || 0)%></strong>
+              recv cnt
+            </div>
+          </div>
+          <div class="column">
+            <div class="verticalcenter">
+            </div>            
+          </div>
+        </div>
+        <br clear="all"/>
+        
+        <div class="columns three-column">
+          <div class="column">
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.send_pend || 0)%></strong>
+              send pend
+            </div>
+          </div>
+          <div class="column">            
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.send_oct || 0)%></strong>
+              sent oct
+            </div>
+          </div>
+          <div class="column">
+            <div class="verticalcenter">
+              <strong class="med"><%=number_with_delimiter(c.send_cnt || 0)%></strong>
+              sent cnt
+            </div>            
+          </div>
+        </div>
+        <br clear="all"/>                
+      </div>
+      <% end %>
+      <% end %>
+
+      <h2>Exchanges:</h2>
+        <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
+          <div class="exchange">
+          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
+          <% bindings = @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }%>
+          <% if bindings.size > 0 %>
+          Bindings:
+          <ul>
+            <% bindings.each do |binding| %>
+              <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
+            <% end %>
+          </ul>
+          <%end%>
+          </div>
+        <% end %>
+      
       <h2>Users:</h2>
       <ul>
         <% @users.select {|u| u.vhost == vhost.name }.each do |u| %>

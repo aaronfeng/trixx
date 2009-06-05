@@ -95,6 +95,27 @@ h2 {
 }
 
 
+.connection {
+  border: solid 1px #aaa;
+  padding: 4px;
+  margin: 4px;
+}
+
+.connection h2 {
+  font-size: 14px;
+  color: #bbb;
+  text-transform: uppercase;
+}
+
+.connection-status {
+  background-color: #efefef;
+  border: solid 1px #ccc;
+  padding: 2px;
+  display: inline;
+  font-size: 10px;
+  font-weight: bold;
+  color: #000;
+}
 
 #status {
   border: solid 1px #aaa;

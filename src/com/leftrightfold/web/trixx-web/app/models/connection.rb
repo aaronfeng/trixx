@@ -21,4 +21,12 @@ class Connection
     @timeout = attributes['timeout']
     @frame_max = attributes['frame-max']
   end
+  
+  def full_address
+    [@address, @port].select {|i| i != nil}.join(":")
+  end
+  
+  def full_peer_address
+    [@peer_address, @peer_port].select {|i| i != nil}.join(":")
+  end
 end
