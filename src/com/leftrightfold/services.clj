@@ -88,7 +88,7 @@
   (PUT "/rabbit/stop"
     (if (stop-app) 200 500))
   (PUT "/rabbit/start"
-    (if (stop-app) 200 500))
+    (if (start-app) 200 500))
   (PUT "/rabbit/reset"
     (if (reset) 200 500))
 
