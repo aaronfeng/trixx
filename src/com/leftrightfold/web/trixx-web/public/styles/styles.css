@@ -127,6 +127,7 @@ h2 {
 
 .action-button {
   float: right;
+  margin: 3px;
 }
 
 .action-button input {

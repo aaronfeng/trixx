@@ -5,9 +5,6 @@
   </head>
   <body>
     <div id="header">
-      <%=image_tag("/images/trixx-rabbit.png")%>
-      <%= link_to "Trixx Dashboard", "/"%>
-      
       <div id="actions">
         <div class="action-button">
           <% form_tag :controller => "rabbit", :action => "reset", :method => "put" do %>
@@ -25,6 +22,8 @@
           <% end %>
         </div>
       </div>
+      <%=image_tag("/images/trixx-rabbit.png")%>
+      <%= link_to "Trixx Dashboard", "/"%>
     </div>
     <div id="content">
       <%= yield %>
