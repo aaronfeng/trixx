@@ -1,98 +1,130 @@
-<table>
-  <tr>
-    <td>
-      <% form_tag :controller => "rabbit", :action => "stop", :method => "put" do %>
-        <%= submit_tag "Stop Application" %>
-      <% end %>
-    </td>
-    <td>
-      <% form_tag :controller => "rabbit", :action => "start", :method => "put" do %>
-        <%= submit_tag "Start Application" %>
-      <% end %>
-    </td>
-    <td>
-      <% form_tag :controller => "rabbit", :action => "reset", :method => "put" do %>
-        <%= submit_tag "Reset Application" %>
-      <% end %>
-    </td>
-  </tr>
-</table>
-<h1>Status</h1>
-<table>
-  <tr>
-    <th>Service</th>
-    <th>Description</th>
-    <th>Version</th>
-  </tr>
-<% @status.running_applications.each do |app|%>
-  <tr>
-    <td><%=app.service%></td>
-    <td><%=app.description%></td>
-    <td><%=app.version%></td>
-  </tr>
-<% end %>
-</table>
-<br/>
-<hr size="1"/>
+<div id="status">
+  <div id="services">
+    <b>Running Services</b>: 
+    <%= @status.running_applications.collect {|app| app.service }.join(", ")%>
+  </div>
 
-<h1>Nodes</h1>
-<ul>
-  <% @status.nodes.each do |node| %>
-  <li><%= node + " (" + (@status.running_nodes.include?(node) ? "running" : "stopped") + ")"%></li>
-  <% end %>
-</ul>
+  <div id="nodes">
+    <h1>Nodes</h1>
+    <% @status.nodes.each do |node| %>
+    <% status = (@status.running_nodes.include?(node) ? "running" : "stopped")%>
+    <div class="node"><div class="status <%=status%>"><%=status%></div><%= node %></div>
+    <% end %>
+  </div>
+</div>
 
+<div id="host-status">
 <% if @status.running_nodes.size > 0 %>
-  <hr size="1"/>
-  <br/>
-  <h1>VHosts</h1>
   <%-@vhosts.each do |vhost| %>
-    <h2><%=vhost.name%></h2>
-    <br/>
-    <b>Exchanges:</b><br/>
-    <ul>
-      <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
-        <li><%=ex.name%></li>      
-        <ul>
-          <% @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }.each do |binding| %>
-            <li><%=binding.queue%> (<%=binding.routing_key%>)</li>
-          <% end %>
-        </ul>
-      <% end %>
-    </ul>
+    <div class="vhost">
+      <h1>VHost: <%=vhost.name%></h1>
+      
+      <h2>Exchanges:</h2>
+        <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
+          <div class="exchange">
+          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
+          <% bindings = @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }%>
+          <% if bindings.size > 0 %>
+          Bindings:
+          <ul>
+            <% bindings.each do |binding| %>
+              <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
+            <% end %>
+          </ul>
+          <%end%>
+          </div>
+        <% end %>
+      </ul>
 
-    <br/>
-    <b>Queues:</b><br/>
-    <ul>
-      <% @queues.select {|q| q.vhost == vhost.name }.each do |queue| %>
-        <li><%=queue.name%> [<%=queue.durable%> / <%=queue.auto_delete%>]</li>
-        <ul>
-          <li><%=queue.messages%> messages</li>
-          <li><%=queue.messages_ready%> messages ready</li>
-          <li><%=queue.messages_unacknowledged%> messages unacknowledged</li>        
-          <li><%=queue.messages_uncommitted%> messages uncommitted</li>        
-          <li><%=queue.consumers%> consumers</li>        
-          <li><%=queue.transactions%> transactions</li>        
-          <li><%=queue.memory%> memory</li>                
-        </ul>
-      <% end %>
-    </ul>
+      <h2>Queues:</h2>
+        <% @queues.select {|q| q.vhost == vhost.name }.each do |queue| %>
+          <div class="queue">
+            <h2>
+              <%=image_tag("/images/database.png")%> QUEUE: <%=queue.name%>
+              <% if queue.durable == "true" %><div class="queue-status">durable</div><%end%>
+              <% if queue.auto_delete == "true"%><div class="queue-status">auto delete</div><%end%>
+            </h2>
 
+            <h3>Status</h3>
+            <div class="columns four-column">
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=queue.consumers%></strong>
+                  consumers
+                </div>
+              </div>
+              <div class="column">            
+                <div class="verticalcenter">
+                  <strong class="med"><%=queue.transactions%></strong>
+                  transactions
+                </div>
+              </div>
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_to_human_size(queue.memory)%></strong>
+                  memory
+                </div>            
+              </div>
+              <div class="column lastcolumn">
+              </div>
+            </div>
+            <br clear="all"/>
+                        
+            <h3>Messages</h3>
+            <div class="columns four-column">
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages)%></strong>
+                  total
+                </div>
+              </div>
+              <div class="column">            
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_ready)%></strong>
+                  ready
+                </div>
+              </div>
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_unacknowledged)%></strong>
+                  unacknowledged
+                </div>            
+              </div>
+              <div class="column lastcolumn">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_uncommitted)%></strong>
+                  uncommitted
+                </div>            
+              </div>
+            </div>
+            <br clear="all"/>            
+            
+          </div>
+        <% end %>
 
-    <br/>
-    <b>Connections:</b>
-    <ul>
+      <br/>
+      <h2>Connections:</h2>
       <% @connections.select {|c| c.vhost == vhost.name }.each do |c| %>
-        <li><%=c.pid%></li>
+        PID: <%=c.pid%> PORT: <%=c.port%> PEER ADDRESS: <%=c.peer_address%> PEER PORT: <%=c.peer_port%>
+        <br/>
+        STATE: <%=c.state%> CHANNELS: <%=c.channels%> TIMEOUT: <%=c.timeout%>
+        <br/>
+        FRAME MAX: <%=c.frame_max%> 
+        USER: <%=c.user%> 
+        <br/>
+        RECV OCT: <%=c.recv_oct%> RECV CNT: <%=c.recv_cnt%>        
+        <br/>
+        SEND PEND: <%=c.send_pend%> SEND OCT: <%=c.send_oct%> SEND CNT: <%=c.send_cnt%>                
       <% end %>
-    </ul>
 
-    <br/>
-    <b>Users:</b></br>
-    <ul>
-      <% @users.select {|u| u.vhost == vhost.name }.each do |u| %>
-        <li><%=u.name%></li>
-      <% end %>
-    </ul>
+      <br/>
+      <h2>Users:</h2>
+      <ul>
+        <% @users.select {|u| u.vhost == vhost.name }.each do |u| %>
+          <li><%=u.name%></li>
+        <% end %>
+      </ul>
+    </div>
   <%-end%>
 <% end %>
+</div>

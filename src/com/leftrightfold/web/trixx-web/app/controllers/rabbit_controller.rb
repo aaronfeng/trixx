@@ -1,17 +1,17 @@
 class RabbitController < ApplicationController
   def stop
     Trixx.stop
-    redirect_to :action => "index"
+    redirect_to root_url
   end
   
   def start
     Trixx.start
-    redirect_to :action => "index"
+    redirect_to root_url
   end
 
   def reset
     Trixx.reset
-    redirect_to :action => "index"
+    redirect_to root_url
   end
 end
 
