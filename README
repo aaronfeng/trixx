@@ -98,9 +98,9 @@ This runs on http://localhost:3000/
    http://localhost:3000/users/guest/edit - edit user "guest"
    http://localhost:3000/users/guest      - delete user when DELETE http request is used
 
-   http://localhost:3000/exchanges        - list all exchanges
-   http://localhost:3000/queues           - list all queues
-   http://localhost:3000/bindings         - list all bindings
+   http://localhost:3000/exchanges        - list all exchanges for a given vhost
+   http://localhost:3000/queues           - list all queues for a given vhost
+   http://localhost:3000/bindings         - list all bindings for a given vhost
    http://localhost:3000/connections      - list all connections
 
    http://localhost:3000/rabbit           - stop, start and reset application
