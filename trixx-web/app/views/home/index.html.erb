@@ -24,15 +24,22 @@
 </div>
 
 <div id="host-status">
-<% if @status.running_nodes.size > 0 %>
-  <%-@vhosts.each do |vhost| %>
-    <div class="vhost">
-      <h1>VHost: <%=vhost.name%></h1>
 
-      <% queues = @queues.select {|q| q.vhost == vhost.name }%>
-      <% if queues.size > 0 %>
+<% form_for :vhost, :url => "/" do |f| -%>
+  <p>
+    <%= f.label "Select vhost" %>
+    <%= collection_select :vhost, :name, @vhosts, :name, :name, { :include_blank => true } %>
+    <%= submit_tag 'Submit' %>
+  </p>
+<% end -%>
+
+<% if @status.running_nodes.size > 0 %>
+    <div class="vhost">
+      <h1>VHost: <%=@selected_vhost%></h1>
+
+      <% if @queues %>
       <h2>Queues:</h2>
-        <% queues.each do |queue| %>
+        <% @queues.each do |queue| %>
           <div class="queue">
             <h2>
               <%=image_tag("/images/database.png")%> QUEUE: <%=queue.name%>
@@ -98,7 +105,7 @@
         <% end %>
       <% end %>
 
-      <% connections = @connections.select {|c| c.vhost == vhost.name } %>
+      <% connections = @connections.select {|c| c.vhost == @selected_vhost } %>
       <% if connections.size > 0 %>
       <h2>Connections:</h2>
       <% connections.each do |c| %>
@@ -174,7 +181,7 @@
       <% end %>
 
       <h2>Exchanges:</h2>
-        <% @exchanges.select {|e| e.vhost == vhost.name }.each do |ex|%>
+        <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
           <div class="exchange">
           <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
           <% bindings = @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }%>
@@ -191,12 +198,11 @@
       
       <h2>Users:</h2>
       <ul>
-        <% @users.select {|u| u.vhost == vhost.name }.each do |u| %>
+        <% @users.select {|u| u.vhost == @selected_vhost }.each do |u| %>
           <li><%=u.name%></li>
         <% end %>
       </ul>
     </div>
-  <%-end%>
 <% end %>
 </div>
 <% end %>

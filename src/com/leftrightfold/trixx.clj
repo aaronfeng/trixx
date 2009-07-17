@@ -213,14 +213,12 @@ user and password set on the instance."
 ;; (is-successful? (execute ...)), which makes me think a helper
 ;; (execute? ...) might be in order...
 (defn- is-successful? 
-  "TODO: Describe this function."
   [f]
   (try (f) true
        (catch Exception _ false)))
 
 ;;; via erlang
 (defn status 
-  "TODO: document this method"
   []
   (let [result (execute "rabbit" "status" [])]
     (let [running-apps (map (fn [a] 

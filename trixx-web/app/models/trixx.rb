@@ -27,24 +27,24 @@ class Trixx
     result.code == 200
   end
 	
-	def self.status
+  def self.status
     Status.new(get("/rabbit/status"))
   end
   
-  def self.exchanges
-    get("/exchanges").collect do |exchange_hash|
+  def self.exchanges(vhost)
+    get("/exchanges/#{vhost}").collect do |exchange_hash|
       Exchange.new(exchange_hash)
     end
   end
 	
-  def self.queues
-    get("/queues").collect do |queue_hash|
+  def self.queues(vhost)
+    get("/queues/#{vhost}").collect do |queue_hash|
       RabbitQueue.new(queue_hash)
     end
   end	
 
-  def self.bindings
-    get("/bindings").collect do |binding_hash|
+  def self.bindings(vhost)
+    get("/bindings/#{vhost}").collect do |binding_hash|
       RabbitBinding.new(binding_hash)
     end
   end
