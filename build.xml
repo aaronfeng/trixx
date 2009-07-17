@@ -44,7 +44,7 @@
     </exec>
   </target>
 
-  <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
+  <target name="compile-rabbit-server" depends="download-rabbit-server-source" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
       <arg value="srcdist" />
       <arg value="all" />
