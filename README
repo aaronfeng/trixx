@@ -52,11 +52,6 @@ I will probably only continue the development only with the Clojure version.
 But if you are interested in building out the Scala version please let me know.
 I'll include the source in a contrib folder for anyone that is interested.
 
-Trixx requires RabbitMQ Java client and RabbitMQ broker from the hg repository, 
-changeset: 329:f4073af3d546 and changeset: 1054:fce2dad390ee respectively.  
-However, some features might work with the released version of the broker.
-For example, the ACL feature is only in trunk version of the broker at this time,
-so attempts to use permissions related functionalities in Trixx will result in error.
 Since Trixx directly communicates with Erlang nodes, it requires JInterface.  Trixx
 is using Erlang 6.5 at the time of this writing.
 
