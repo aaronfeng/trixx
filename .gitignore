@@ -13,3 +13,4 @@ rabbitmq/rabbitmq-server/ebin/*.beam
 *.pyc
 src/com/leftrightfold/web/trixx-web/log/
 *.sqlite3
+rabbitmq/
