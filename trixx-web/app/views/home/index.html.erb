@@ -1,8 +1,18 @@
 <div id="status">
   <div id="services">
     <b>Running Services</b>: 
-    <%= @status.running_applications.collect {|app| app.service }.join(", ")%>
+    <% if @status %>
+
+      <%= @status.running_applications.collect {|app| app.service }.join(", ")%>
+
+    <% else %>
+
+      <h2>Cannot connect to RabbitMQ, please make sure Rabbit is running.</>
+
+    <% end %>
   </div>
+
+<% if @status %>
 
   <div id="nodes">
     <h1>Nodes</h1>
@@ -189,3 +199,4 @@
   <%-end%>
 <% end %>
 </div>
+<% end %>
