@@ -29,22 +29,20 @@
     </fileset>
   </path>
   
-  <path id="emma.lib">
-    <fileset dir="${basedir}/deps/test">
-      <include name="*.jar" />
-    </fileset>
-  </path>
-  
-  <!-- directory that contains emma.jar and emma_ant.jar: -->
-  <property name="emma.dir" value="${basedir}/deps/test" />
-  
-  <path id="emma.lib" >
-    <pathelement location="${emma.dir}/emma.jar" />
-    <pathelement location="${emma.dir}/emma_ant.jar" />
-  </path>
-
-  <taskdef resource="emma_ant.properties" classpathref="emma.lib" />
-
+  <target name="download-rabbit-server-source" description="Download RabbitMQ Serer source">
+    <echo message="Downloading RabbitMQ 1.6 from hg repository, this may take a few minutes. " />
+    <mkdir dir="${rabbitmq.base.dir}" />
+    <exec executable="hg">
+      <arg value="clone" />
+      <arg value="http://hg.rabbitmq.com/rabbitmq-server" />
+      <arg value="${rabbitmq.base.dir}/rabbitmq-server" />
+    </exec>
+    <exec executable="hg">
+      <arg value="clone" />
+      <arg value="http://hg.rabbitmq.com/rabbitmq-codegen" />
+      <arg value="${rabbitmq.base.dir}/rabbitmq-codegen" />
+    </exec>
+  </target>
 
   <target name="compile-rabbit-server" description="Compile RabbitMQ Server">
     <exec executable="make" dir="${rabbitmq.server.dir}">
@@ -119,53 +117,14 @@
     </exec>
   </target>
 
-  <target name="emma" description="turns on EMMA instrumentation/reporting" >
-    <property name="emma.enabled" value="true" />
-  </target>
-
   <target name="test" depends="jar" >
-    <mkdir dir="${basedir}/build/emma" />
-    <!-- run rabbit... -->
     <echo message="Ensure you've run rabbit before this task..." />
-    <emmajava classname="clojure.main" fork="true" libclasspathref="emma.lib"
-              fullmetadata="yes" sourcepath="${source.dir}"
-              enabled="${emma.enabled}" >
-      <filter includes="com.leftrightfold.*" />
-      <html outfile="${basedir}/build/emma/coverage.html"/>
-      <xml  outfile="${basedir}/build/emma/coverage.xml" />
-      <txt  outfile="${basedir}/build/emma/coverage.txt" />
-      <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
-      <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
-      <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
-      <arg value="test/src/com/leftrightfold/trixx_test.clj" />
-      <classpath>
-          <path refid="classpath" />
-      </classpath>
-    </emmajava>
-    <!-- bring rabbit down... -->
+    <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
+    <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
+    <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
+    <arg value="test/src/com/leftrightfold/trixx_test.clj" />
+    <classpath>
+        <path refid="classpath" />
+    </classpath>
   </target>
-
-  <!-- Expiremental: generate Java/Clojure structure definitions /
-       parsers from the Erlang/RabbitMQ record declarations -->
-  <target name="gen-rec-structs" description="Generate the RabbitMQ Structure Definitions">
-    <mkdir dir="build/ebin" />
-    <exec executable="erlc" searchpath="true" dir="${basedir}">
-      <arg value="-I" />
-      <arg value="rabbitmq/rabbitmq-server/include" />
-      <arg value="-o" />
-      <arg value="build/ebin" />
-      <arg value="src/erl/rgen.erl" />
-    </exec>
-    <exec executable="erl" searchpath="true" dir="${basedir}">
-      <arg value="-pa" />
-      <arg value="build/ebin" />
-      <arg value="-noinput" />
-      <arg value="-hidden" />
-      <arg value="-sname" />
-      <arg value="rgen" />
-      <arg value="-s" />
-      <arg value="rgen" />
-    </exec>
-  </target>
-
 </project>
