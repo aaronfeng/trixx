@@ -184,11 +184,10 @@
         <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
           <div class="exchange">
           <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
-          <% bindings = @bindings.select {|b| b.vhost == vhost.name && b.exchange == ex.name }%>
-          <% if bindings.size > 0 %>
+          <% if @bindings %>
           Bindings:
           <ul>
-            <% bindings.each do |binding| %>
+            <% @bindings.each do |binding| %>
               <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
             <% end %>
           </ul>
