@@ -6,6 +6,12 @@
   (:import java.net.URLDecoder))
 
 
+(defn trim-slash [s] 
+  (if (and (> (count s) 1)
+           (= (str (first s)) "/"))
+    (apply str (rest s))
+    s))
+
 (defn get-exchanges [vhost]
   (json-str (list-exchanges vhost))) 
 
@@ -40,17 +46,17 @@
   (GET "/exchanges"
     (get-exchanges "/"))
   (GET "/exchanges/*"
-    (get-exchanges (str "/" (params :*))))
+    (get-exchanges (trim-slash (params :*))))
 
   (GET "/queues"
     (get-queues "/"))
   (GET "/queues/*"
-    (get-queues (str "/" (params :*))))
+    (get-queues (trim-slash (params :*))))
 
   (GET "/bindings"
     (get-bindings "/"))
   (GET "/bindings/*"
-    (get-bindings (str "/" (params :*))))
+    (get-bindings (trim-slash (params :*))))
 
   (GET "/vhosts"
     (json-str (list-vhosts)))
