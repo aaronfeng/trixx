@@ -119,6 +119,7 @@
 
   <target name="test" depends="jar" >
     <echo message="Ensure you've run rabbit before this task..." />
+   <java fork="true" classname="clojure.lang.Script" failonerror="true">
     <sysproperty key="com.leftrightfold.trixx.cookie"          value="${com.leftrightfold.trixx.cookie}" />
     <sysproperty key="com.leftrightfold.trixx.rabbit-server"   value="${com.leftrightfold.trixx.rabbit-server}" />
     <sysproperty key="com.leftrightfold.trixx.rabbit-instance" value="${com.leftrightfold.trixx.rabbit-instance}" />
@@ -126,5 +127,6 @@
     <classpath>
         <path refid="classpath" />
     </classpath>
+    </java>
   </target>
 </project>
