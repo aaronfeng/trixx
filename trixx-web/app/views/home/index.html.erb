@@ -187,7 +187,8 @@
           <% if @bindings %>
           Bindings:
           <ul>
-            <% @bindings.each do |binding| %>
+            <% exchange_bindings = @bindings.select{ |b| b.exchange == ex.name } %>
+            <% exchange_bindings.each do |binding| %>
               <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
             <% end %>
           </ul>
