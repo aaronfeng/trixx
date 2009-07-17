@@ -113,7 +113,7 @@
 
   <target name="run-www" description="Run the Ruby Console Web App">
     <exec executable="ruby" searchpath="true" dir="${basedir}">
-      <arg value="src/com/leftrightfold/web/trixx-web/script/server" />
+      <arg value="trixx-web/script/server" />
     </exec>
   </target>
 
