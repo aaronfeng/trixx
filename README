@@ -1,60 +1,20 @@
 "Yo rabbit, Trixx are for hackers"
 
 The goal of Trixx is to build an administration and monitoring tool for RabbitMQ.
-Trixx is written in Clojure and, therefore, is available for all languages that 
-run on JVM.
+Trixx consists of 3 componments: Trixx web, Trixx service, and Trixx Erlang.
 
-A web-service layer has been added around core Trixx that returns JSON.  This
-enable easy consumption for non-JVM based languages.  Trixx Web Management
-Console is written in Ruby and should be JRuby compatible.
+Trixx Erlang is used to communicate with Erlang nodes to extract RabbitMQ information.  
+Trixx service returns RabbitMQ information as JSON.  Trixx web consumes JSON and renders 
+the administration interface.
 
 Features of Trixx:
 
-* add exchange
-* delete exchange
-* list exchanges
-* add queue
-* delete queue
-* list queues
-* add binding
-* list bindings
-* stop app
-* start app
-* reset
-* add vhost
-* delete vhost
-* list vhosts
-* add user
-* delete user
-* list users
-* list connections
-* set permissions
-* clear permissions
-* list vhost permissions
-* list user permissions
-
-Currently, there is no user interface associated with Trixx, but the eventual 
-goal is to provide a nice web interface (hopefully in the next few weeks).  Also,
-the core code is likely to change drastically in the next few months because of
-heavy development.
-
-At the moment, all the features provided by Trixx are also provided by
-rabbitmqctl command line utility, which ships with RabbitMQ.  So you can
-think of the core of Trixx as an API around rabbitmqctl for JVM languages.
-
-Trixx was started as an experiment to learn more about Clojure and RabbitMQ. 
-During my experiment, many people expressed interest in such a tool. So 
-I am making this freely available in hopes that people will find it useful and 
-possibly contribute to the project.
-
-I also wrote a Scala version of Trixx for the same reason.  However, 
-I will probably only continue the development only with the Clojure version.  
-But if you are interested in building out the Scala version please let me know.
-I'll include the source in a contrib folder for anyone that is interested.
+* All the features of rabbitmqctl + more via a web interface
+* User authentication
+* More coming soon
 
 Since Trixx directly communicates with Erlang nodes, it requires JInterface.  Trixx
 is using Erlang 6.5 at the time of this writing.
-
 
 Building
 --------------------------------------------------------------------------------
@@ -62,9 +22,9 @@ To build from source:
 
   ant fetch-deps compile-rabbit-server jar
 
-Note that we've included a specific version of RabbitMQ at this time.  You'll
-have to have Erlang installed so it can be built.   RabbitMQ will get built by
-the compile-rabbit-server target.
+Note that we've included a specific version of RabbitMQ at this time. Erlang must be 
+installed so it can be built.  RabbitMQ will be built by the compile-rabbit-server target.  
+To compile rabbit server Python 2.5 or greater must be installed along with simplejson.py.
 
 Then in separate terminals, first run the rabbit server:
 
@@ -74,38 +34,34 @@ Then the trixx server:
 
   ant run-trixx
 
-Open your browser to any of:
+Open your browser to any of the following urls to incoming JSON:
 
-   http://localhost:8080/users
-   http://localhost:8080/exchanges
-   http://localhost:8080/queues
-   http://localhost:8080/connections
-   http://localhost:8080/bindings
-	
-   * There are more operations available, but cannot be queried in the browser. 
-     Use Web Management Console to explore these features.
+   GET    http://localhost:8080/exchanges/:vhost         - :vhost is optional, default to "/"  
+   GET    http://localhost:8080/queues/:vhost
+   GET    http://localhost:8080/bindings/:vhost
+   GET    http://localhost:8080/vhosts
+   GET    http://localhost:8080/connections
+   GET    http://localhost:8080/users/:user/permissions  - :user is the rabbit user name
 
-The trixx server is a web-services interface to the administrative features
-provided by the trixx library which returns JSON.  To run the Ruby Web Management 
-Console, use
+   GET    http://localhost:8080/users
+   PUT    http://localhost:8080/users                    - params: name, vhost, config_permission
+                                                                   write_permission, read_permission
+   POST   http://localhost:8080/users                    - params: name, password, vhost, config_permission
+                                                                   write_permission, read_permission
+   DELETE http://localhost:8080/users/:user
+
+   GET    http://localhost:8080/rabbit/status	
+   PUT    http://localhost:8080/rabbit/start
+   PUT    http://localhost:8080/rabbit/stop
+   PUT    http://localhost:8080/rabbit/reset
+
+   POST   http://localhost:8080/sessions/authenticate    - parmas: name, password
+
+To run the Ruby Web Management Console:
 
   ant run-www
 
-This runs on http://localhost:3000/
-
-   http://localhost:3000/users            - list all users
-   http://localhost:3000/users/new        - add a new user
-   http://localhost:3000/users/guest/edit - edit user "guest"
-   http://localhost:3000/users/guest      - delete user when DELETE http request is used
-
-   http://localhost:3000/exchanges        - list all exchanges for a given vhost
-   http://localhost:3000/queues           - list all queues for a given vhost
-   http://localhost:3000/bindings         - list all bindings for a given vhost
-   http://localhost:3000/connections      - list all connections
-
-   http://localhost:3000/rabbit           - stop, start and reset application
-
-   * More features coming soon.
+Navigate to http://localhost:3000/ and login with RabbitMQ user/password.
 
 Dependencies
 --------------------------------------------------------------------------------
@@ -113,7 +69,6 @@ Dependencies
 We are making an effort to ensure that Trixx and its dependencies are java 1.5
 compatible.  If you are working on Trixx and would like to submit changes back
 to the core repository, please ensure that your code is 1.5 compatible.
-
 
 
 Contact
