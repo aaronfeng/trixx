@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'prototype' %>
+
 <div id="status">
   <div id="services">
     <b>Running Services</b>: 
@@ -25,11 +27,11 @@
 
 <div id="host-status">
 
-<% form_for :vhost, :url => "/" do |f| -%>
+<% remote_form_for :vhost, :url => "/", :html => { :id => "vhost_form" } do |f| -%>
   <p>
     <%= f.label "Select vhost" %>
     <%= collection_select :vhost, :name, @vhosts, :name, :name, { :include_blank => true } %>
-    <%= submit_tag 'Submit' %>
+    <%= observe_field "vhost_name", :function => "$('vhost_form').submit();" %>  
   </p>
 <% end -%>
 
