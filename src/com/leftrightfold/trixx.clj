@@ -426,5 +426,3 @@ user and password set on the instance."
             "rabbit_access_control" "check_login" 
             [(OtpErlangBinary. (.getBytes "PLAIN"))  
              (OtpErlangBinary. (.getBytes (str name "\u0000" password)))])))
-
-

@@ -6,10 +6,8 @@ module AuthenticatedSystem
       !!current_user
     end
 
-    # Accesses the current user from the session.
-    # Future calls avoid the database because nil is not equal to false.
     def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+      @current_user ||= (login_from_basic_auth || login_from_cookie) unless @current_user == false
     end
 
     # Store the given user id in the session.
@@ -103,31 +101,14 @@ module AuthenticatedSystem
     # Login
     #
 
-    # Called from #current_user.  First attempt to login by the user id stored in the session.
-    def login_from_session
-      self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
-    end
-
-    # Called from #current_user.  Now, attempt to login by basic authentication information.
     def login_from_basic_auth
       authenticate_with_http_basic do |login, password|
         self.current_user = User.authenticate(login, password)
       end
     end
     
-    #
-    # Logout
-    #
-
-    # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
-    # for the paranoid: we _should_ be storing user_token = hash(cookie_token, request IP)
     def login_from_cookie
-      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
-        self.current_user = user
-        handle_remember_cookie! false # freshen cookie token (keeping date)
-        self.current_user
-      end
+      user = cookies[:auth_token]
     end
 
     # This is ususally what you want; resetting the session willy-nilly wreaks
@@ -160,9 +141,7 @@ module AuthenticatedSystem
     # and they should be changed at each login
 
     def valid_remember_cookie?
-      return nil unless @current_user
-      (@current_user.remember_token?) && 
-        (cookies[:auth_token] == @current_user.remember_token)
+      return nil unless @current_user 
     end
     
     # Refresh the cookie auth token if it exists, create it otherwise

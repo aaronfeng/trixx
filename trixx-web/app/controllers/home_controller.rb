@@ -1,4 +1,5 @@
 class HomeController < ApplicationController 
+  
   def index
     @selected_vhost = params[:vhost][:name] if params[:vhost]
     @selected_vhost ||= "/"

@@ -70,9 +70,9 @@
   (PUT "/users/:user"
     (set-user-permissions (params :name)
                           (params :vhost)
-                          (params :config)
-                          (params :write)
-                          (params :read)))
+                          (params :config_permission)
+                          (params :write_permission)
+                          (params :read_permission)))
 
   (POST "/users"
     (add-user-with-permissions (params :name) 

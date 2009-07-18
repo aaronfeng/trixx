@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :connection   
   map.resources :queue	
   map.resources :rabbit	  
+  map.resource :session
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'

@@ -6,6 +6,11 @@ class User < ActiveRecord::BaseWithoutTable
   column :read, :string
   column :password, :string
 
+  # restful authentication attributes
+  column :remember_token, :string
+  column :forget_me, :boolean
+  column :remember_token_expires_at, :datetime
+
   validates_presence_of :name
   validates_presence_of :vhost
   validates_presence_of :config
@@ -14,10 +19,9 @@ class User < ActiveRecord::BaseWithoutTable
   validates_presence_of :password
   #validates_uniqueness_of   :name
 
-  # need to properly implement this
   def self.authenticate(name, password)
     return nil if name.blank? || password.blank?
-    # need to return the user
+    Trixx.authenticate(name, password)
   end
 
   def to_param

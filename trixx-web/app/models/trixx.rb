@@ -6,12 +6,6 @@ class Trixx
   format :json
   base_uri "http://localhost:8080"
   
-  def self.authenticate(name, password)
-    result = post("/sessions/authenticate", :query => { :name     => name,
-                                                        :password => password})
-    result.code == 200
-  end
-
   def self.stop
     result = put("/rabbit/stop")
     result.code == 200
@@ -32,19 +26,19 @@ class Trixx
   end
   
   def self.exchanges(vhost)
-    get("/exchanges/#{vhost}").collect do |exchange_hash|
+    get("/exchanges/#{URI.escape(vhost)}").collect do |exchange_hash|
       Exchange.new(exchange_hash)
     end
   end
 	
   def self.queues(vhost)
-    get("/queues/#{vhost}").collect do |queue_hash|
+    get("/queues/#{URI.escape(vhost)}").collect do |queue_hash|
       RabbitQueue.new(queue_hash)
     end
   end	
 
   def self.bindings(vhost)
-    get("/bindings/#{vhost}").collect do |binding_hash|
+    get("/bindings/#{URI.escape(vhost)}").collect do |binding_hash|
       RabbitBinding.new(binding_hash)
     end
   end
@@ -68,18 +62,19 @@ class Trixx
   end
   
   def self.update_user_atrributes(attributes)
-    result = put("/users/#{attributes[:name]}", :query => { :name              => name, 
-                                                            :vhost             => vhost, 
-                                                            :config_permission => config_permission,
-                                                            :write_permission  => write_permission,
-                                                            :read_permission   => read_permission })
+    result = put("/users/#{URI.escape(attributes[:name])}", 
+                 :query => { "name"              => name, 
+                             "vhost"             => vhost, 
+                             "config_permission" => config_permission,
+                             "write_permission"  => write_permission,
+                             "read_permission"   => read_permission })
     User.new(attributes) if result.code == 200
   end
 
   def self.find_user_by_name(name) 
     # should throw an exception if result.code is not 200
     result = get("/users/#{URI.escape(name)}")
-    User.new(result.to_hash) if result.code == 200 
+    User.new(result.to_hash) if result.code == 200
   end
 
   def self.delete_user(name)
@@ -89,14 +84,20 @@ class Trixx
     true if result.code == 200
   end
 
+  def self.authenticate(name, password)
+    result = post('/sessions/authenticate', :query => { "name"      => name,
+                                                        "password"  => password })
+    User.new(:name => name, :password => password) if result.code == 200
+  end
+
   def self.add_user(user)
     # should throw an exception if result.code is not 200
-    result = post("/users", :query => { :name      => user.name, 
-                                        :password  => user.password, 
-                                        :vhost     => user.vhost, 
-                                        :config    => user.config,
-                                        :write     => user.write,
-                                        :read      => user.read })
+    result = post("/users", :query => { "name"                 => user.name, 
+                                        "password"             => user.password, 
+                                        "vhost"                => user.vhost, 
+                                        "config_permission"    => user.config,
+                                        "write_permission"     => user.write,
+                                        "read_permission"      => user.read })
     result.code == 200
   end
 end
