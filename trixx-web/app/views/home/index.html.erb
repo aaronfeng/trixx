@@ -1,4 +1,5 @@
 <%= javascript_include_tag 'prototype' %>
+<%= javascript_include_tag :defaults %>
 
 <div id="status">
   <div id="services">
@@ -39,8 +40,8 @@
     <div class="vhost">
       <h1>VHost: <%=@selected_vhost%></h1>
 
-      <% if @queues %>
       <h2>Queues:</h2>
+      <% if @queues %>
         <% @queues.each do |queue| %>
           <div class="queue">
             <h2>
@@ -107,10 +108,53 @@
         <% end %>
       <% end %>
 
-      <% connections = @connections.select {|c| c.vhost == @selected_vhost } %>
-      <% if connections.size > 0 %>
+      <h2>Exchanges:</h2>
+        <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
+          <div class="exchange">
+          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
+          <% if @bindings %>
+          Bindings:
+          <ul>
+            <% exchange_bindings = @bindings.select{ |b| b.exchange == ex.name } %>
+            <% exchange_bindings.each do |binding| %>
+              <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
+            <% end %>
+          </ul>
+          <%end%>
+          </div>
+        <% end %>
+
+      <div class="action-button">
+        <% form_tag :controller => "users", :action => "new" do %>
+          <%= submit_tag "Add User" %>
+        <% end %>
+      </div>
+      
+      <h2>Users:</h2>
+      <% if @users.size > 0 %>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>VHost</th>
+          <th>Config</th>
+          <th>Write</th>
+          <th>Read</th>		
+        </tr>
+        <% @users.each do |u| %>  
+          <tr>
+            <td><%=u.name%></td>
+            <td><%=u.vhost%></td>
+            <td><%=u.config%></td>
+            <td><%=u.write%></td>
+            <td><%=u.read%></td>
+          </tr>
+        <% end %>
+      </table>
+      <% end %>      
+
       <h2>Connections:</h2>
-      <% connections.each do |c| %>
+      <% if @connections  %>
+      <% @connections.each do |c| %>
         <div class="connection">
           <h2>Connection: <%=c.full_address%> from <%=c.full_peer_address%> by <%=c.user%> 
           <div class="connection-status"><%=c.state%></div>
@@ -182,28 +226,6 @@
       <% end %>
       <% end %>
 
-      <h2>Exchanges:</h2>
-        <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
-          <div class="exchange">
-          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
-          <% if @bindings %>
-          Bindings:
-          <ul>
-            <% exchange_bindings = @bindings.select{ |b| b.exchange == ex.name } %>
-            <% exchange_bindings.each do |binding| %>
-              <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
-            <% end %>
-          </ul>
-          <%end%>
-          </div>
-        <% end %>
-      
-      <h2>Users:</h2>
-      <ul>
-        <% @users.select {|u| u.vhost == @selected_vhost }.each do |u| %>
-          <li><%=u.name%></li>
-        <% end %>
-      </ul>
     </div>
 <% end %>
 </div>

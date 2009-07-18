@@ -63,11 +63,11 @@ class Trixx
   
   def self.update_user_atrributes(attributes)
     result = put("/users/#{URI.escape(attributes[:name])}", 
-                 :query => { "name"              => name, 
-                             "vhost"             => vhost, 
-                             "config_permission" => config_permission,
-                             "write_permission"  => write_permission,
-                             "read_permission"   => read_permission })
+                 :query => { "name"   => name, 
+                             "vhost"  => vhost, 
+                             "config" => config,
+                             "write"  => write,
+                             "read"   => read })
     User.new(attributes) if result.code == 200
   end
 
@@ -92,12 +92,12 @@ class Trixx
 
   def self.add_user(user)
     # should throw an exception if result.code is not 200
-    result = post("/users", :query => { "name"                 => user.name, 
-                                        "password"             => user.password, 
-                                        "vhost"                => user.vhost, 
-                                        "config_permission"    => user.config,
-                                        "write_permission"     => user.write,
-                                        "read_permission"      => user.read })
+    result = post("/users", :query => { "name"      => user.name, 
+                                        "password"  => user.password, 
+                                        "vhost"     => user.vhost, 
+                                        "config"    => user.config,
+                                        "write"     => user.write,
+                                        "read"      => user.read })
     result.code == 200
   end
 end

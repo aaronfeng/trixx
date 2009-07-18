@@ -17,19 +17,20 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @vhosts = Trixx.vhosts
   end
 
   def create
-    logout_keeping_session!
+    #logout_keeping_session!
     @user = User.new(params[:user])
     validated = @user.save
     result = Trixx.add_user(@user) if validated
    
     if result
-      self.current_user = @user # !! now logged in
-      redirect_back_or_default("/users")
+      #self.current_user = @user # !! now logged in
+      redirect_back_or_default("/")
     else
-       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+       flash[:error]  = "We couldn't set up the user."
        render :action => 'new'
     end
   end

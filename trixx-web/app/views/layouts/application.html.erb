@@ -27,6 +27,12 @@
             <%= submit_tag "Start" %>
           <% end %>
         </div>
+<% else %>
+        <div class="action-button">
+          <% form_tag login_path do %>
+            <%= submit_tag "Log In" %>
+          <% end %>
+        </div>
 <% end %>
       </div>
       <%=image_tag("/images/trixx-rabbit.png")%>

@@ -8,8 +8,8 @@ class HomeController < ApplicationController
     @exchanges = Trixx.exchanges(@selected_vhost)
     @bindings = Trixx.bindings(@selected_vhost)
     @queues = Trixx.queues(@selected_vhost)
-    @users = Trixx.users
-    @connections = Trixx.connections
+    @users = Trixx.users.select{ |u| u.vhost == @selected_vhost }
+    @connections = Trixx.connections.select{ |c| c.vhost == @selected_vhost }
   rescue
   end
 end

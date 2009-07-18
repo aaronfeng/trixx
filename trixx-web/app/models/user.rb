@@ -27,8 +27,4 @@ class User < ActiveRecord::BaseWithoutTable
   def to_param
     self.name
   end
- 
-  #def save
-  #  Trixx.add_user(self.name, self.password, self.vhost, self.config, self.write, self.read)
-  #end
 end
