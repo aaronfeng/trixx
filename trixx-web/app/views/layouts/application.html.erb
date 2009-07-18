@@ -6,6 +6,12 @@
   <body>
     <div id="header">
       <div id="actions">
+<% if logged_in? %>
+        <div class="action-button">
+          <% form_tag logout_path do %>
+            <%= submit_tag "Log Out" %>
+          <% end %>
+        </div>
         <div class="action-button">
           <% form_tag :controller => "rabbit", :action => "reset", :method => "put" do %>
             <%= submit_tag "Reset" %>
@@ -21,6 +27,7 @@
             <%= submit_tag "Start" %>
           <% end %>
         </div>
+<% end %>
       </div>
       <%=image_tag("/images/trixx-rabbit.png")%>
       <%= link_to "Trixx Dashboard", "/"%>
