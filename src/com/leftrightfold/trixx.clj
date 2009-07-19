@@ -87,7 +87,7 @@
 
 (defstruct exchange-info :name :vhost :type :durable :auto-delete)
 
-(defstruct queue-info :name :vhost :durable :auto_delete 
+(defstruct queue-info :name :vhost :durable :auto-delete 
            :messages-ready :messages-unacknowledged
 	   :messages-uncommitted :messages :acks-uncommitted 
            :consumers :transactions :memory)
@@ -396,7 +396,7 @@ user and password set on the instance."
 
 ;;; via protocol
 (defn add-queue
-  [#^String vhost #^String user #^String password #^String queue-name durable]
+  [#^String vhost #^String user #^String password #^String queue-name #^Boolean durable]
   (is-successful? #(with-channel @*server* vhost user password (.queueDeclare queue-name durable))))
 
 (defn delete-queue

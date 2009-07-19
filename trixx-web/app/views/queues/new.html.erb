@@ -1,0 +1,15 @@
+<h1>Add a Queue</h1>
+<%= error_messages_for :queue %>
+
+<% form_for :queue, :url => queues_path do |f| -%>
+<p><%= label_tag 'Name' %><br/>
+<%= f.text_field :name %></p>
+
+<p><%= label_tag 'VHost' %><br/>
+<%= f.collection_select(:vhost, @vhosts, :name, :name) %></p>
+
+<p><%= label_tag 'Durable' %><br/>
+<%= select(:queue, :durable, [["Yes",true],["No",false]]) %></p>
+
+<p><%= submit_tag 'Submit' %>
+<% end -%>

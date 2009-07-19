@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       #self.current_user = @user # !! now logged in
       redirect_back_or_default("/")
     else
-       flash[:error]  = "We couldn't set up the user."
+       flash[:error]  = "Unable to create the user."
        render :action => 'new'
     end
   end

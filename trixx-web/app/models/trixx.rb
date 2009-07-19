@@ -30,10 +30,25 @@ class Trixx
       Exchange.new(exchange_hash)
     end
   end
-	
+
+  def self.add_queue(user, password, queue)
+    result = post("/queues", :query => { "user"     => user, 
+                                         "password" => password, 
+                                         "name"     => queue.name, 
+                                         "vhost"    => queue.vhost,
+                                         "durable"  => queue.durable })
+    result.code == 200
+  end
+
   def self.queues(vhost)
-    get("/queues/#{URI.escape(vhost)}").collect do |queue_hash|
-      RabbitQueue.new(queue_hash)
+    get("/queues/#{URI.escape(vhost)}").collect do |h|
+      RabbitQueue.new(:name => h["name"], :vhost => h["vhost"], :durable => h["durable"],
+                      :auto_delete => h["auto-delete"], :messages_ready => h["messages-ready"],
+                      :messages_unacknowledged => h["messages-unacknowledged"],
+                      :messages_uncommitted => h["messages-uncommitted"],
+                      :messages => h["messages"], :acks_uncommitted => h["acks-uncommitted"],
+                      :consumers => h["consumers"], :transactions => h["transactions"],
+                      :memory => h["memory"])
     end
   end	
 

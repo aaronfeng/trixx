@@ -1,9 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :exchange
-  map.resources :binding
+  map.resources :exchanges
+  map.resources :bindings
   map.resources :connection   
-  map.resources :queue	
-  map.resources :rabbit	  
+  map.resources :queues	
   map.resource :session
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

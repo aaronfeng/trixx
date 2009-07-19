@@ -40,6 +40,12 @@
     <div class="vhost">
       <h1>VHost: <%=@selected_vhost%></h1>
 
+      <div class="action-button">
+        <% form_tag :controller => "queues", :action => "new" do %>
+          <%= submit_tag "Add Queue" %>
+        <% end %>
+      </div>
+
       <h2>Queues:</h2>
       <% if @queues %>
         <% @queues.each do |queue| %>
@@ -131,7 +137,7 @@
       </div>
       
       <h2>Users:</h2>
-      <% if @users.size > 0 %>
+      <% if @users && @users.size > 0 %>
       <table>
         <tr>
           <th>Name</th>

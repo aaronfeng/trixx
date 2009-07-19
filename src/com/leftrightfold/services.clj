@@ -74,6 +74,14 @@
                           (params :write)
                           (params :read)))
 
+  (POST "/queues"
+        (if (add-queue (params :vhost)
+                       (params :user)
+                       (params :password)
+                       (params :name)
+                       (Boolean/parseBoolean (params :durable)))
+          200
+          500))
   (POST "/users"
     (add-user-with-permissions (params :name) 
                                (params :password)
