@@ -12,7 +12,7 @@ class QueuesController < ApplicationController
       redirect_back_or_default("/")
     else
       @vhosts = Trixx.vhosts
-      flash[:error]  = "Unable to create the queue."
+      flash[:error]  = "Unable to create queue.  <br/> Make sure logged in user: #{session[:user_id]} has proper RabbitMQ permissions on vhost: #{params[:exchange][:vhost]}"
       render :action => 'new'
     end
   end

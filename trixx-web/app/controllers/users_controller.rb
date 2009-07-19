@@ -39,9 +39,4 @@ class UsersController < ApplicationController
     Trixx.delete_user(params[:id])
     redirect_to :action => "index"
   end
-
-  def destroy
-    Trixx.delete_user(params[:id])
-    redirect_to :action => "index"
-  end
 end
