@@ -37,7 +37,9 @@ Then the trixx server:
 Open your browser to any of the following urls to incoming JSON:
 
    GET    http://localhost:8080/exchanges/:vhost         - :vhost is optional, default to "/"  
+   POST   http://localhost:8080/exchanges                - params: user, password, name, type, vhost, durable
    GET    http://localhost:8080/queues/:vhost
+   POST   http://localhost:8080/queues                   - params: user, password, name, vhost, durable
    GET    http://localhost:8080/bindings/:vhost
    GET    http://localhost:8080/vhosts
    GET    http://localhost:8080/connections

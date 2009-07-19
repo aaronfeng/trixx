@@ -108,16 +108,21 @@
                 </div>            
               </div>
             </div>
-            <br clear="all"/>            
-            
+            <br clear="all"/>                
           </div>
         <% end %>
       <% end %>
 
+     <div class="action-button">
+        <% form_tag :controller => "exchanges", :action => "new" do %>
+          <%= submit_tag "Add Exchange" %>
+        <% end %>
+     </div>
+
       <h2>Exchanges:</h2>
         <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
           <div class="exchange">
-          <h2><%=ex.name%> <div class="exchange-type"><%=ex.exchange_type%></div></h2>      
+          <h2><%=ex.name%> <div class="exchange-type"><%=ex.type%></div></h2>      
           <% if @bindings %>
           Bindings:
           <ul>

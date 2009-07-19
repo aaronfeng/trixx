@@ -26,9 +26,21 @@ class Trixx
   end
   
   def self.exchanges(vhost)
-    get("/exchanges/#{URI.escape(vhost)}").collect do |exchange_hash|
-      Exchange.new(exchange_hash)
+    get("/exchanges/#{URI.escape(vhost)}").collect do |h|
+      Exchange.new(:name => h["name"], :vhost => h["vhost"],
+                   :type => h["type"], :durable => h["durable"],
+                   :auto_delete => h["auto-delete"])
     end
+  end
+
+  def self.add_exchange(user, password, exchange)
+    result = post("/exchanges", :query => { "user"        => user, 
+                                            "password"    => password, 
+                                            "name"        => exchange.name, 
+                                            "type"        => exchange.type,
+                                            "vhost"       => exchange.vhost,
+                                            "durable"     => exchange.durable })
+    result.code == 200
   end
 
   def self.add_queue(user, password, queue)

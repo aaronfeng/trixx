@@ -404,7 +404,7 @@ user and password set on the instance."
   (is-successful? #(with-channel @*server* vhost user password (.queueDelete queue-name))))
 
 (defn add-exchange
-  [#^String vhost #^String user #^String password #^String name type durable]
+  [#^String vhost #^String user #^String password #^String name #^String type #^Boolean durable]
   (is-successful? #(with-channel @*server* vhost user password (.exchangeDeclare name type durable))))
 
 (defn delete-exchange

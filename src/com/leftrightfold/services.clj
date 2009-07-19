@@ -48,6 +48,16 @@
   (GET "/exchanges/*"
     (get-exchanges (trim-slash (params :*))))
 
+  (POST "/exchanges"
+    (if (add-exchange (params :vhost)
+                      (params :user)
+                      (params :password)
+                      (params :name)
+                      (params :type)
+                      (Boolean/parseBoolean (params :durable)))
+      200
+      500))
+
   (GET "/queues"
     (get-queues "/"))
   (GET "/queues/*"
