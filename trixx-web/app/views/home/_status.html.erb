@@ -12,19 +12,3 @@
     <% end %>
   </div>
 </div>
-
-<div id="host-status">
-  <div class="action-button">
-    <% form_tag :controller => "vhosts", :action => "new" do %>
-      <%= submit_tag "Add Vhost" %>
-    <% end %>
-  </div>
-
-  <% remote_form_for :vhost, :url => "/", :html => { :id => "vhost_form" } do |f| -%>
-    <p>
-      <%= f.label "Select vhost" %>
-      <%= collection_select :vhost, :name, @vhosts, :name, :name, { :include_blank => true } %>
-      <%= observe_field "vhost_name", :function => "$('vhost_form').submit();" %>  
-    </p>
-  <% end -%>
-</div>
