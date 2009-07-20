@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :exchanges
+  map.resources :vhosts
   map.resources :bindings
   map.resources :connection   
   map.resources :queues	

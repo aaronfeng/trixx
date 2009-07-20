@@ -101,6 +101,8 @@
 
 (defstruct status-info :running-applications :nodes :running-nodes)
 
+(defstruct vhost :name)
+
 ;;; erlang helper
 ;; TODO[KB]: discuss renaming 'value' to something like otp-type->value
 (defmulti  value class)
@@ -307,7 +309,7 @@ user and password set on the instance."
   "Returns a list of the virtual hosts in the rabbit server."
   []
   (let [result (execute->seq "rabbit_access_control" "list_vhosts" [])]
-    (map (fn [h] (value h)) result)))
+    (map (fn [h] (struct vhost (value h))) result)))
 
 (defn- execute-list-permissions->seq
   "Taget is either user name or host name"

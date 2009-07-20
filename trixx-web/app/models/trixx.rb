@@ -117,6 +117,11 @@ class Trixx
     User.new(:name => name, :password => password) if result.code == 200
   end
 
+  def self.add_vhost(vhost)
+    result = post("/vhosts", :query => { "name" => vhost.name })
+    result.code == 200
+  end
+
   def self.add_user(user)
     # should throw an exception if result.code is not 200
     result = post("/users", :query => { "name"      => user.name, 

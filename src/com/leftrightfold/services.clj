@@ -71,6 +71,12 @@
   (GET "/vhosts"
     (json-str (list-vhosts)))
 
+  (POST "/vhosts"
+(prn params)
+        (if (add-vhost (params :name))
+          200
+          500))
+
   (GET "/connections"
     (json-str (list-connections)))
 

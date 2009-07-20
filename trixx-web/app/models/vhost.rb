@@ -1,7 +1,5 @@
-class Vhost
-  attr_reader :name
-  
-  def initialize(name)
-    @name = name
-  end
+class Vhost < ActiveRecord::BaseWithoutTable
+  column :name, :string
+
+  validates_presence_of :name
 end

@@ -36,6 +36,12 @@
   </p>
 <% end -%>
 
+     <div class="action-button">
+        <% form_tag :controller => "vhosts", :action => "new" do %>
+          <%= submit_tag "Add Vhost" %>
+        <% end %>
+     </div>
+
 <% if @status.running_nodes.size > 0 %>
     <div class="vhost">
       <h1>VHost: <%=@selected_vhost%></h1>

@@ -1,0 +1,12 @@
+<h1>Add a Vhost</h1>
+
+<%= flash_messages %>
+
+<%= error_messages_for :vhost %>
+
+<% form_for :vhost, :url => vhosts_path do |f| -%>
+<p><%= label_tag 'Name' %><br/>
+<%= f.text_field :name %></p>
+
+<p><%= submit_tag 'Submit' %>
+<% end -%>
