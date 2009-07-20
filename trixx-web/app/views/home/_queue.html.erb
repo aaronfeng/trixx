@@ -1,0 +1,72 @@
+    <div class="action-button">
+      <% form_tag :controller => "queues", :action => "new" do %>
+        <%= submit_tag "Add Queue" %>
+      <% end %>
+    </div>  
+
+    <h2>Queues:</h2>
+      <% if @queues %>
+        <% @queues.each do |queue| %>
+          <div class="queue">
+            <h2>
+              <%=image_tag("/images/database.png")%> QUEUE: <%=queue.name%>
+              <% if queue.durable == "true" %><div class="queue-status">durable</div><%end%>
+              <% if queue.auto_delete == "true"%><div class="queue-status">auto delete</div><%end%>
+            </h2>
+
+            <h3>Status</h3>
+            <div class="columns four-column">
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=queue.consumers%></strong>
+                  consumers
+                </div>
+              </div>
+              <div class="column">            
+                <div class="verticalcenter">
+                  <strong class="med"><%=queue.transactions%></strong>
+                  transactions
+                </div>
+              </div>
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_to_human_size(queue.memory)%></strong>
+                  memory
+                </div>            
+              </div>
+              <div class="column lastcolumn">
+              </div>
+            </div>
+            <br clear="all"/>
+                        
+            <h3>Messages</h3>
+            <div class="columns four-column">
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages)%></strong>
+                  total
+                </div>
+              </div>
+              <div class="column">            
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_ready)%></strong>
+                  ready
+                </div>
+              </div>
+              <div class="column">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_unacknowledged)%></strong>
+                  unacknowledged
+                </div>            
+              </div>
+              <div class="column lastcolumn">
+                <div class="verticalcenter">
+                  <strong class="med"><%=number_with_delimiter(queue.messages_uncommitted)%></strong>
+                  uncommitted
+                </div>            
+              </div>
+            </div>
+            <br clear="all"/>                
+          </div>
+        <% end %>
+      <% end %>

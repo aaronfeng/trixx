@@ -1,0 +1,27 @@
+<div class="action-button">
+  <% form_tag :controller => "users", :action => "new" do %>
+  <%= submit_tag "Add User" %>
+  <% end %>
+</div>
+
+<h2>Users:</h2>
+  <% if @users && @users.size > 0 %>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>VHost</th>
+        <th>Config</th>
+        <th>Write</th>
+        <th>Read</th>		
+      </tr>
+      <% @users.each do |u| %>  
+        <tr>
+          <td><%=u.name%></td>
+          <td><%=u.vhost%></td>
+          <td><%=u.config%></td>
+          <td><%=u.write%></td>
+          <td><%=u.read%></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %> 

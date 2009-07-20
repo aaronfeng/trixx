@@ -1,0 +1,22 @@
+<div class="action-button">
+  <% form_tag :controller => "exchanges", :action => "new" do %>
+    <%= submit_tag "Add Exchange" %>
+  <% end %>
+</div>
+
+<h2>Exchanges:</h2>
+  <% @exchanges.select {|e| e.vhost == @selected_vhost }.each do |ex|%>
+    <div class="exchange">
+      <h2><%=ex.name%> <div class="exchange-type"><%=ex.type%></div></h2>
+      <% if @bindings %>
+        Bindings:
+        <ul>
+          <% @bindings.each do |binding| %>
+            <% if binding.exchange == ex.name %>
+            <li>Queue: <%=binding.queue%> (Routing Key: <%=binding.routing_key%>)</li>
+            <% end %>
+          <% end %>
+        </ul>
+      <%end%>
+    </div>
+  <% end %>

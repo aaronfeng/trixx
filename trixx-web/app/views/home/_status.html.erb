@@ -1,0 +1,30 @@
+<div id="status">
+  <div id="services">
+    <b>Running Services</b>: 
+    <%= @status.running_applications.collect {|app| app.service }.join(", ")%>
+  </div>
+
+  <div id="nodes">
+    <h1>Nodes</h1>
+    <% @status.nodes.each do |node| %>
+      <% status = (@status.running_nodes.include?(node) ? "running" : "stopped")%>
+      <div class="node"><div class="status <%=status%>"><%=status%></div><%= node %></div>
+    <% end %>
+  </div>
+</div>
+
+<div id="host-status">
+  <div class="action-button">
+    <% form_tag :controller => "vhosts", :action => "new" do %>
+      <%= submit_tag "Add Vhost" %>
+    <% end %>
+  </div>
+
+  <% remote_form_for :vhost, :url => "/", :html => { :id => "vhost_form" } do |f| -%>
+    <p>
+      <%= f.label "Select vhost" %>
+      <%= collection_select :vhost, :name, @vhosts, :name, :name, { :include_blank => true } %>
+      <%= observe_field "vhost_name", :function => "$('vhost_form').submit();" %>  
+    </p>
+  <% end -%>
+</div>
