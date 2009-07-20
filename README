@@ -42,6 +42,7 @@ Open your browser to any of the following urls to incoming JSON:
    POST   http://localhost:8080/queues                   - params: user, password, name, vhost, durable
    GET    http://localhost:8080/bindings/:vhost
    GET    http://localhost:8080/vhosts
+   POST   http://localhost:8080/vhosts                   - params: name
    GET    http://localhost:8080/connections
    GET    http://localhost:8080/users/:user/permissions  - :user is the rabbit user name
 
