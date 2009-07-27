@@ -328,22 +328,22 @@ user and password set on the instance."
 
 (defn list-user-permissions
   [u]
-  (first (remove nil?
-                 (map #(if (and (instance? OtpErlangTuple %) 
-                                (= (count (.elements %)) 4))
-                         (struct user
-                                 u
-                                 (otp->pullv % 0)
-                                 (otp->pullv % 1)
-                                 (otp->pullv % 2)
-                                 (otp->pullv % 3)))
-                      (execute-list-permissions->seq u "list_user_permissions")))))
+  (remove nil?
+          (map #(if (and (instance? OtpErlangTuple %) 
+                         (= (count (.elements %)) 4))
+                    (struct user
+                            u
+                            (otp->pullv % 0)
+                            (otp->pullv % 1)
+                            (otp->pullv % 2)
+                            (otp->pullv % 3)))
+                (execute-list-permissions->seq u "list_user_permissions"))))
 
 (defn list-users 
   []
-  (map
-   #(list-user-permissions (value %))
-   (execute->seq "rabbit_access_control" "list_users" [])))
+  (flatten 
+    (map #(list-user-permissions (value %))
+         (execute->seq "rabbit_access_control" "list_users" []))))
 
 ;; needs to handle user already exists error
 (defn add-user
