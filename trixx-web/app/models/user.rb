@@ -19,9 +19,15 @@ class User < ActiveRecord::BaseWithoutTable
   validates_presence_of :password
   #validates_uniqueness_of   :name
 
+  # called by AuthenticatedSystem
   def self.authenticate(name, password)
     return nil if name.blank? || password.blank?
     Trixx.authenticate(name, password)
+  end
+
+  # called by AuthenticatedSystem
+  def self.find_by_id(name)
+    Trixx.find_user_by_name(name)
   end
 
   def to_param

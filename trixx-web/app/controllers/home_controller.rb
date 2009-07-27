@@ -1,5 +1,4 @@
 class HomeController < ApplicationController 
-  
   def index
     flash[:notice] = ""
     @selected_vhost = params[:vhost][:name] if params[:vhost]
