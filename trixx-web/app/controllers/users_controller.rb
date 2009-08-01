@@ -1,12 +1,4 @@
 class UsersController < ApplicationController
-  def index
-    @users = Trixx.users
-  end
-
-  def show 
-    @user = Trixx.find_user_by_name(params[:id])
-  end
-
   def edit
     @user = Trixx.find_user_by_name(params[:id])
   end

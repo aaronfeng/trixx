@@ -10,6 +10,5 @@ class HomeController < ApplicationController
     @queues = Trixx.queues(@selected_vhost)
     @users = Trixx.users.select{ |u| u.vhost == @selected_vhost }
     @connections = Trixx.connections.select{ |c| c.vhost == @selected_vhost }
-  rescue
   end
 end
