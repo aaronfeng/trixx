@@ -35,7 +35,7 @@
 (defn- #^String load-cookie 
   "Set the Erlang *cookie* from the contents of a local file (as a string)."
   [#^String cookie-file]
-  (reset! *cookie* (slurp cookie-file)))
+  (reset! *cookie* (chop (slurp cookie-file))))
 
 (defn- #^String load-default-cookie-file
   "Set the Erlang *cookie* from the file $HOME/.erlang.cookie (the default location)."
