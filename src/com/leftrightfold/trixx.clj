@@ -350,6 +350,10 @@ user and password set on the instance."
   [#^String name #^String password]
   (is-successful? #(execute "rabbit_access_control" "add_user" [name password]))) 
 
+(defn change-password
+  [#^String name #^String password]
+  (is-successful? #(execute "rabbit_access_control" "change_password" [name password])))
+
 (defn delete-user
   [#^String name]
   (is-successful? #(execute "rabbit_access_control" "delete_user" [name]))) 
@@ -414,13 +418,14 @@ user and password set on the instance."
   (is-successful? #(with-channel @*server* vhost user password (.exchangeDelete name))))
 
 (defn add-binding
-  [#^String vhost #^String user #^String password queue exchange routing-key]
+  [#^String vhost #^String user #^String password #^String queue #^String exchange #^String routing-key]
   (is-successful? #(with-channel @*server* vhost user password (.queueBind queue exchange routing-key))))
 
 (defn- is-user
   [tuple]
   (= (otp->pullv tuple 0) 
      "user"))
+
 
 (defn valid-user 
   [#^String name #^String password]
