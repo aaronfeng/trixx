@@ -1,5 +1,20 @@
 "Yo rabbit, Trixx are for hackers"
 
+**************************************************************************************
+ATTENTION:
+
+  In about a week or so (2/1/10), I am actually deprecating most of this project.  Trixx as   
+it stands right now, consists of 3 componments: web, service and Erlang interop.
+I am removing everything except the Erlang interop which is written in Clojure.
+I have decided to go back to the basics by focusing on the Erlang interop bit.
+With that said, I already have made improvements to it, and I will push my changes 
+in a week.  I hope people will find it easier and more intuitive to use.
+
+Maybe one day when I get more time, I will go back to build a general graphical 
+monitoring tool.  
+
+**************************************************************************************
+
 The goal of Trixx is to build an administration and monitoring tool for RabbitMQ.
 Trixx consists of 3 componments: Trixx web, Trixx service, and Trixx Erlang.
 
