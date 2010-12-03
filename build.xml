@@ -111,12 +111,6 @@
     </exec>
   </target>
 
-  <target name="run-www" description="Run the Ruby Console Web App">
-    <exec executable="ruby" searchpath="true" dir="${basedir}">
-      <arg value="trixx-web/script/server" />
-    </exec>
-  </target>
-
   <target name="test" depends="jar" >
     <echo message="Ensure you've run rabbit before this task..." />
    <java fork="true" classname="clojure.lang.Script" failonerror="true">
