@@ -1,0 +1,19 @@
+long_description: >
+    hello world this is a test for githacking at philly startup weekend!
+    
+categories:
+    - clojure
+    - rabbitmq
+    
+needs:
+    roles:
+        - developers
+        - evangelists
+        - testers
+        - ui
+    skills:
+        - awesome people
+
+mentions:
+    - http://aaronfeng.com
+    - http://twitter.com/aaronfeng
